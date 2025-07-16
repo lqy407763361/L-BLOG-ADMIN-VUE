@@ -11,7 +11,9 @@
             </div>
             <ul class="sidebar-list">
                   <li><a href=""><i class="fa fa-dashboard"></i><span>仪表盘</span></a></li>
-                  <li id="sidebar-show"><a class="sl-name-down"><i class="fa fa-files-o"></i><span>文章管理</span></a>
+                  <li id="sidebar-show">
+                        <a class="sl-name-down"><i class="fa fa-files-o"></i><span>文章管理</span></a>
+                        <ArrowRight class="ArrowRight" style="color:#fff;width:12px;height:12px;"/>
                         <ul class="sidebar-list-child">
                               <li><a href=""><span>文章列表</span></a></li>
                               <li><a href=""><span>文章分类列表</span></a></li>

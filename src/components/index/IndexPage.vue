@@ -15,7 +15,7 @@ import CommonFooter from '@/components/common/CommonFooter.vue';
             <div class="statistics-number">
                   <div class="preview">
                         <div class="title">文章数量</div>
-                        <div class="body"><Reading class="preview-icon"/><span>99</span></div>
+                        <div class="body"><Document class="preview-icon"/><span>99</span></div>
                         <div class="move"><a href="">查看更多</a></div>
                   </div>
                   <div class="preview">
