@@ -65,7 +65,7 @@ header{width:100%;border-bottom:1px solid #e5e5e5;position:fixed;background:#fff
 			a{color:#C4C4C4;display:block;padding:10px;border-bottom:1px solid #585858;display:flex;align-items:center;}
 			span{margin-left:10px;}
 		}
-		.sidebar-list-child{font-size:1.2rem;background-color:#444444;
+		.sidebar-list-child{font-size:1.2rem;background-color:#444444;display:none;
 			li{
 				&:hover span{
 					animation:run 0.5s forwards;
@@ -93,9 +93,11 @@ header{width:100%;border-bottom:1px solid #e5e5e5;position:fixed;background:#fff
 .preview>.title{border-radius:3px 3px 0px 0px;background:#1E91CF;}
 .preview>.move{border-radius:0px 0px 3px 3px;background:#3DA9E3;}
 .preview>.title,.preview>.move{font-size:1.2rem;padding-left:5px;padding-top:3px;padding-bottom:3px;}
-.preview>.body{font-size:4rem;background:#279FE0;}
+.preview>.body{font-size:4rem;background:#279FE0;display:flex;align-items:center;}
+.preview>.body>span{margin-left:auto;}
 .preview,.preview a{color:#fff;}
 .preview span{float:right;padding-right:15px;padding-top:10px;}
+.preview-icon{width:60px;}
 .index-panel-box, .chart-box{width:50%;float:left;}
 .index-panel, .chart{border:1px solid #e8e8e8;margin-top:20px;border-radius:3px;}
 .index-panel{margin-right:15px;}

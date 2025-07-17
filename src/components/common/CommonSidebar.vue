@@ -17,11 +17,11 @@
                   </li>
                   <li>
                         <a class="sl-name-down">
-                              <i class="fa fa-files-o"></i><span>文章管理</span><ArrowRight class="side-icon" />
+                              <Document style="margin-right:auto;width:12px;margin-left: 10px;"/><span>文章管理</span><ArrowRight class="side-icon" />
                         </a>
                         <ul class="sidebar-list-child">
-                              <li><a href=""><span>文章列表</span></a></li>
-                              <li><a href=""><span>文章分类列表</span></a></li>
+                              <li><a href=""><span>文章列表</span><DArrowRight class="side-icon"/></a></li>
+                              <li><a href=""><span>文章分类列表</span><DArrowRight class="side-icon"/></a></li>
                         </ul>
                   </li>
                   <li>
@@ -29,7 +29,7 @@
                               <i class="fa fa-envelope"></i><span>单页管理</span><ArrowRight class="side-icon" />
                         </a>
                         <ul class="sidebar-list-child">
-                              <li><a href=""><span>关于我</span></a></li>
+                              <li><a href=""><span>关于我</span><DArrowRight class="side-icon"/></a></li>
                         </ul>
                   </li>
                   <li>
@@ -37,7 +37,7 @@
                               <i class="fa fa-envelope"></i><span>信息管理</span><ArrowRight class="side-icon" />
                         </a>
                         <ul class="sidebar-list-child">
-                              <li><a href=""><span>我的新消息</span></a></li>
+                              <li><a href=""><span>我的新消息</span><DArrowRight class="side-icon"/></a></li>
                         </ul>
                   </li>
                   <li>
@@ -45,7 +45,7 @@
                               <i class="fa fa-user"></i><span>会员管理</span><ArrowRight class="side-icon" />
                         </a>
                         <ul class="sidebar-list-child">
-                              <li><a href=""><span>会员列表</span></a></li>
+                              <li><a href=""><span>会员列表</span><DArrowRight class="side-icon"/></a></li>
                         </ul>
                   </li>
                   <li>
@@ -53,8 +53,8 @@
                               <i class="fa fa-vcard"></i><span>管理员管理</span><ArrowRight class="side-icon" />
                         </a>
                         <ul class="sidebar-list-child">
-                              <li><a href=""><span>管理员列表</span></a></li>
-                              <li><a href=""><span>管理员群组列表</span></a></li>
+                              <li><a href=""><span>管理员列表</span><DArrowRight class="side-icon"/></a></li>
+                              <li><a href=""><span>管理员群组列表</span><DArrowRight class="side-icon"/></a></li>
                         </ul>
                   </li>
                   <li>
@@ -62,7 +62,7 @@
                               <i class="fa fa-cogs"></i><span>系统管理</span><ArrowRight class="side-icon" />
                         </a>
                         <ul class="sidebar-list-child">
-                              <li><a href=""><span>网站设置</span></a></li>
+                              <li><a href=""><span>网站设置</span><DArrowRight class="side-icon"/></a></li>
                         </ul>
                   </li>
             </ul>
