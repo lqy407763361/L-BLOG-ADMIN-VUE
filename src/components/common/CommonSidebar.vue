@@ -12,57 +12,57 @@
             <ul class="sidebar-list">
                   <li>
                         <a href="">
-                              <i class="fa fa-dashboard"></i><span>仪表盘</span>
+                              <Odometer /><span>仪表盘</span>
                         </a>
                   </li>
                   <li>
                         <a class="sl-name-down">
-                              <Document style="margin-right:auto;width:12px;margin-left: 10px;"/><span>文章管理</span><ArrowRight class="side-icon" />
+                              <Document /><span >文章管理</span><ArrowRight />
                         </a>
                         <ul class="sidebar-list-child">
-                              <li><a href=""><span>文章列表</span><DArrowRight class="side-icon"/></a></li>
-                              <li><a href=""><span>文章分类列表</span><DArrowRight class="side-icon"/></a></li>
+                              <li><a href=""><span>文章列表</span><DArrowRight /></a></li>
+                              <li><a href=""><span>文章分类列表</span><DArrowRight /></a></li>
                         </ul>
                   </li>
                   <li>
                         <a class="sl-name">
-                              <i class="fa fa-envelope"></i><span>单页管理</span><ArrowRight class="side-icon" />
+                              <Reading /><span>单页管理</span><ArrowRight />
                         </a>
                         <ul class="sidebar-list-child">
-                              <li><a href=""><span>关于我</span><DArrowRight class="side-icon"/></a></li>
+                              <li><a href=""><span>关于我</span><DArrowRight /></a></li>
                         </ul>
                   </li>
                   <li>
                         <a class="sl-name">
-                              <i class="fa fa-envelope"></i><span>信息管理</span><ArrowRight class="side-icon" />
+                              <Message /><span>信息管理</span><ArrowRight />
                         </a>
                         <ul class="sidebar-list-child">
-                              <li><a href=""><span>我的新消息</span><DArrowRight class="side-icon"/></a></li>
+                              <li><a href=""><span>我的新消息</span><DArrowRight /></a></li>
                         </ul>
                   </li>
                   <li>
                         <a class="sl-name">
-                              <i class="fa fa-user"></i><span>会员管理</span><ArrowRight class="side-icon" />
+                              <User /><span>会员管理</span><ArrowRight />
                         </a>
                         <ul class="sidebar-list-child">
-                              <li><a href=""><span>会员列表</span><DArrowRight class="side-icon"/></a></li>
+                              <li><a href=""><span>会员列表</span><DArrowRight /></a></li>
                         </ul>
                   </li>
                   <li>
                         <a class="sl-name">
-                              <i class="fa fa-vcard"></i><span>管理员管理</span><ArrowRight class="side-icon" />
+                              <Postcard /><span>管理员管理</span><ArrowRight />
                         </a>
                         <ul class="sidebar-list-child">
-                              <li><a href=""><span>管理员列表</span><DArrowRight class="side-icon"/></a></li>
-                              <li><a href=""><span>管理员群组列表</span><DArrowRight class="side-icon"/></a></li>
+                              <li><a href=""><span>管理员列表</span><DArrowRight /></a></li>
+                              <li><a href=""><span>管理员群组列表</span><DArrowRight /></a></li>
                         </ul>
                   </li>
                   <li>
                         <a class="sl-name">
-                              <i class="fa fa-cogs"></i><span>系统管理</span><ArrowRight class="side-icon" />
+                              <Setting /><span>系统管理</span><ArrowRight />
                         </a>
                         <ul class="sidebar-list-child">
-                              <li><a href=""><span>网站设置</span><DArrowRight class="side-icon"/></a></li>
+                              <li><a href=""><span>网站设置</span><DArrowRight /></a></li>
                         </ul>
                   </li>
             </ul>

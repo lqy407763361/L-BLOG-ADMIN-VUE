@@ -62,8 +62,10 @@ header{width:100%;border-bottom:1px solid #e5e5e5;position:fixed;background:#fff
 	}
 	.sidebar-list{
 		li{font-size:1.4rem;cursor:pointer;
-			a{color:#C4C4C4;display:block;padding:10px;border-bottom:1px solid #585858;display:flex;align-items:center;}
+			a{color:#C4C4C4;padding:10px;border-bottom:1px solid #585858;display:flex;align-items:center;}
 			span{margin-left:10px;}
+			svg:first-child{color:#fff;width:1.4rem;height:1.4rem;margin-left:10px;}
+			svg:last-child{color:#fff;width:1.2rem;height:1.2rem;margin-left:auto;}
 		}
 		.sidebar-list-child{font-size:1.2rem;background-color:#444444;display:none;
 			li{
@@ -75,7 +77,6 @@ header{width:100%;border-bottom:1px solid #e5e5e5;position:fixed;background:#fff
 				}
 			}
 		}
-		.side-icon{color:#fff;width:1.2rem;height:1.2rem;margin-left:auto;}
 	}
 }
 
@@ -96,7 +97,7 @@ header{width:100%;border-bottom:1px solid #e5e5e5;position:fixed;background:#fff
 .preview>.body{font-size:4rem;background:#279FE0;display:flex;align-items:center;}
 .preview>.body>span{margin-left:auto;}
 .preview,.preview a{color:#fff;}
-.preview span{float:right;padding-right:15px;padding-top:10px;}
+.preview span{float:right;padding:10px 15px 10px 0px;}
 .preview-icon{width:60px;}
 .index-panel-box, .chart-box{width:50%;float:left;}
 .index-panel, .chart{border:1px solid #e8e8e8;margin-top:20px;border-radius:3px;}
