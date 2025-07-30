@@ -20,17 +20,17 @@ import CommonFooter from '@/components/common/CommonFooter.vue';
                   </div>
                   <div class="preview">
                         <div class="title">消息数量</div>
-                        <div class="body"><i class="fa fa-envelope"></i><span>99</span></div>
+                        <div class="body"><Message class="preview-icon"/><span>99</span></div>
                         <div class="move"><a href="">查看更多</a></div>
                   </div>
                   <div class="preview">
                         <div class="title">会员数量</div>
-                        <div class="body"><i class="fa fa-user"></i><span>99</span></div>
+                        <div class="body"><User class="preview-icon"/><span>99</span></div>
                         <div class="move"><a href="">查看更多</a></div>
                   </div>
                   <div class="preview">
                         <div class="title">管理员数量</div>
-                        <div class="body"><i class="fa fa-vcard"></i><span>99</span></div>
+                        <div class="body"><Postcard class="preview-icon"/><span>99</span></div>
                         <div class="move"><a href="">查看更多</a></div>
                   </div>
             </div>
@@ -38,7 +38,7 @@ import CommonFooter from '@/components/common/CommonFooter.vue';
             <div class="index-panel-box">
                   <div class="index-panel">
                         <div class="panel-title">我的后台</div>	
-                        <div id="panel-body">
+                        <div class="panel-body">
                               <ul>
                                     <li>您好，管理员名称</li>
                                     <li>所属角色：管理员群组</li>
@@ -57,7 +57,7 @@ import CommonFooter from '@/components/common/CommonFooter.vue';
             <div class="chart-box">
                   <div class="chart">
                         <div class="chart-title">最近一周来访人数</div>	
-                        <div id="cart-body"></div>
+                        <div class="cart-body"></div>
                   </div>
             </div>
             <div style="clear:both;"></div>

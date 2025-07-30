@@ -1,12 +1,30 @@
 <script setup>
+import { useHead } from '@vueuse/head';
+import { ref } from 'vue';
+
+// SEO
+useHead({
+      'title': 'L-BLOG-ADMIN',
+      'meta': [{
+            name: 'L-BLOG-ADMIN',
+            content: 'L-BLOG后台管理系统'
+      }]
+});
+
+// 消息提醒
+const dropdownMenuStatus = ref(true);
+const changeDropdownMenu = () =>{
+      dropdownMenuStatus.value = !dropdownMenuStatus.value;
+}
+
 </script>
 
 <template>
       <header>
-            <h1><a href="">L-BLOG</a></h1>
+            <h1><a href="/">L-BLOG</a></h1>
             <ul class="nav">
-                  <li class="dropdown"><a><span class="danger-msg">99</span><BellFilled class="header-icon"/></a>
-                        <ul id="dropdown-menu">
+                  <li class="dropdown" @click="changeDropdownMenu"><a><span class="danger-msg">99</span><BellFilled class="header-icon"/></a>
+                        <ul class="dropdown-menu" :class="{'fade': dropdownMenuStatus}">
                               <li class="dropdown-header">消息</li>
                               <li><a href="">新消息 <span class="warning-msg">99</span></a></li>
                               <li><a href="">所有消息 <span class="info-msg">99</span></a></li>
