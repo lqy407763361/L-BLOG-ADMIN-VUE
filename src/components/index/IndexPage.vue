@@ -1,8 +1,29 @@
 <script setup>
+import { ref } from 'vue'
+import useEChart from '@/assets/js/useECharts.js'
 import CommonHeader from '@/components/common/CommonHeader.vue'
 import CommonSidebar from '@/components/common/CommonSidebar.vue'
 import CommonBreadcrumb from '@/components/common/CommonBreadcrumb.vue'
-import CommonFooter from '@/components/common/CommonFooter.vue';
+import CommonFooter from '@/components/common/CommonFooter.vue'
+
+// 图表配置
+const echartsData = ref({
+      title: {},
+      tooltip: {},
+      xAxis: {
+            data: ['周一', '周二', '周三', '周四', '周五', '周六', '周日']
+      },
+      yAxis: {},
+      series: [{
+            name: '访问人数',
+            type: 'bar',
+            data: [5, 20, 36, 10, 10, 20, 10],
+            itemStyle: {  
+                  normal:{color:'#ab78ba'}  
+            }  
+      }]
+});
+const { chartBody } = useEChart(echartsData);
 </script>
 
 <template>
@@ -57,7 +78,7 @@ import CommonFooter from '@/components/common/CommonFooter.vue';
             <div class="chart-box">
                   <div class="chart">
                         <div class="chart-title">最近一周来访人数</div>	
-                        <div class="cart-body"></div>
+                        <div class="chart-body" ref="chartBody"></div>
                   </div>
             </div>
             <div style="clear:both;"></div>
