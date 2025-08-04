@@ -1,6 +1,6 @@
 <script setup>
 import { ref } from 'vue'
-import useEChart from '@/assets/js/useECharts.js'
+import useECharts from '@/assets/js/useECharts.js'
 import CommonHeader from '@/components/common/CommonHeader.vue'
 import CommonSidebar from '@/components/common/CommonSidebar.vue'
 import CommonBreadcrumb from '@/components/common/CommonBreadcrumb.vue'
@@ -23,7 +23,7 @@ const echartsData = ref({
             }  
       }]
 });
-const { chartBody } = useEChart(echartsData);
+const { chartBody } = useECharts(echartsData);
 </script>
 
 <template>

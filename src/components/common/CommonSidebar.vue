@@ -21,59 +21,58 @@ const slNameHandleClick = (event) =>{
             </div>
             <ul class="sidebar-list" @click="slNameHandleClick">
                   <li>
-                        <a href="/" class="aa">
+                        <router-link to="/" replace>
                               <Odometer /><span>仪表盘</span>
-                              <font-awesome-icon icon="fa-solid fa-angle-right" />
-                        </a>
+                        </router-link>
                   </li>
                   <li>
-                        <a class="sl-name">
+                        <router-link to="/" class="sl-name" active-class="active-link">
                               <Document /><span>文章管理</span><ArrowRight />
-                        </a>
+                        </router-link>
                         <ul class="sl-child">
-                              <li><a href=""><span>文章列表</span><DArrowRight /></a></li>
-                              <li><a href=""><span>文章分类列表</span><DArrowRight /></a></li>
+                              <li><router-link to="/"><span>文章列表</span><DArrowRight /></router-link></li>
+                              <li><router-link to="/"><span>文章分类列表</span><DArrowRight /></router-link></li>
                         </ul>
                   </li>
                   <li>
-                        <a class="sl-name">
+                        <router-link to="/" class="sl-name" active-class="active-link">
                               <Reading /><span>单页管理</span><ArrowRight />
-                        </a>
+                        </router-link>
                         <ul class="sl-child">
-                              <li><a href=""><span>关于我</span><DArrowRight /></a></li>
+                              <li><router-link to="/"><span>关于我</span><DArrowRight /></router-link></li>
                         </ul>
                   </li>
                   <li>
-                        <a class="sl-name">
+                        <router-link to="/" class="sl-name" active-class="active-link">
                               <Message /><span>信息管理</span><ArrowRight />
-                        </a>
+                        </router-link>
                         <ul class="sl-child">
-                              <li><a href=""><span>我的新消息</span><DArrowRight /></a></li>
+                              <li><router-link to="/"><span>我的新消息</span><DArrowRight /></router-link></li>
                         </ul>
                   </li>
                   <li>
-                        <a class="sl-name">
+                        <router-link to="/" class="sl-name" active-class="active-link">
                               <User /><span>会员管理</span><ArrowRight />
-                        </a>
+                        </router-link>
                         <ul class="sl-child">
-                              <li><a href=""><span>会员列表</span><DArrowRight /></a></li>
+                              <li><router-link to="/"><span>会员列表</span><DArrowRight /></router-link></li>
                         </ul>
                   </li>
                   <li>
-                        <a class="sl-name">
+                        <router-link to="/" class="sl-name" active-class="active-link">
                               <Postcard /><span>管理员管理</span><ArrowRight />
-                        </a>
+                        </router-link>
                         <ul class="sl-child">
-                              <li><a href=""><span>管理员列表</span><DArrowRight /></a></li>
-                              <li><a href=""><span>管理员群组列表</span><DArrowRight /></a></li>
+                              <li><router-link to="/"><span>管理员列表</span><DArrowRight /></router-link></li>
+                              <li><router-link to="/"><span>管理员群组列表</span><DArrowRight /></router-link></li>
                         </ul>
                   </li>
                   <li>
-                        <a class="sl-name">
+                        <router-link to="/" class="sl-name" active-class="active-link">
                               <Setting /><span>系统管理</span><ArrowRight />
-                        </a>
+                        </router-link>
                         <ul class="sl-child">
-                              <li><a href=""><span>网站设置</span><DArrowRight /></a></li>
+                              <li><router-link to="/"><span>网站设置</span><DArrowRight /></router-link></li>
                         </ul>
                   </li>
             </ul>
