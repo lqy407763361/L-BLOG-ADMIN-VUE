@@ -9,8 +9,14 @@ const menuStatus = ref({
       admin: false,
       system: false
 });
-const toggleSidebarMenu = (status) => {
-      menuStatus.value[status] = !menuStatus.value[status];
+const toggleSidebarMenu = (menuType) => {
+      Object.keys(menuStatus.value).forEach(key => {
+            if(key==menuType){
+                  menuStatus.value[menuType] = !menuStatus.value[menuType];
+            }else{
+                  menuStatus.value[key] = false;
+            }
+      });
 };
 </script>
 
@@ -29,54 +35,66 @@ const toggleSidebarMenu = (status) => {
                         </router-link>
                   </li>
                   <li>
-                        <router-link to="/" class="sl-name" @click="toggleSidebarMenu('article')">
-                              <Document /><span>文章管理</span><ArrowRight />
-                        </router-link>
+                        <div class="sl-name" @click="toggleSidebarMenu('article')">
+                              <Document /><span>文章管理</span><ArrowRight :class="{'rotate':menuStatus.article}" />
+                        </div>
+                        <transition name="sidebar">
                         <ul class="sl-child" v-show="menuStatus.article">
                               <li><router-link to="/"><span>文章列表</span><DArrowRight /></router-link></li>
                               <li><router-link to="/"><span>文章分类列表</span><DArrowRight /></router-link></li>
                         </ul>
+                        </transition>
                   </li>
                   <li>
-                        <router-link to="/" class="sl-name" @click="toggleSidebarMenu('page')">
-                              <Reading /><span>单页管理</span><ArrowRight />
-                        </router-link>
-                        <ul class="sl-child" v-show="menuStatus.page">
-                              <li><router-link to="/"><span>关于我</span><DArrowRight /></router-link></li>
-                        </ul>
+                        <div class="sl-name" @click="toggleSidebarMenu('page')">
+                              <Reading /><span>单页管理</span><ArrowRight :class="{'rotate':menuStatus.page}" />
+                        </div>
+                        <transition name="sidebar">
+                              <ul class="sl-child" v-show="menuStatus.page">
+                                    <li><router-link to="/"><span>关于我</span><DArrowRight /></router-link></li>
+                              </ul>
+                        </transition>
                   </li>
                   <li>
-                        <router-link to="/" class="sl-name" @click="toggleSidebarMenu('message')">
-                              <Message /><span>信息管理</span><ArrowRight />
-                        </router-link>
-                        <ul class="sl-child" v-show="menuStatus.message">
-                              <li><router-link to="/"><span>我的新消息</span><DArrowRight /></router-link></li>
-                        </ul>
+                        <div class="sl-name" @click="toggleSidebarMenu('message')">
+                              <Message /><span>信息管理</span><ArrowRight :class="{'rotate':menuStatus.message}" />
+                        </div>
+                        <transition name="sidebar">
+                              <ul class="sl-child" v-show="menuStatus.message">
+                                    <li><router-link to="/"><span>我的新消息</span><DArrowRight /></router-link></li>
+                              </ul>
+                        </transition>
                   </li>
                   <li>
-                        <router-link to="/" class="sl-name" @click="toggleSidebarMenu('user')">
-                              <User /><span>会员管理</span><ArrowRight />
-                        </router-link>
-                        <ul class="sl-child" v-show="menuStatus.user">
-                              <li><router-link to="/"><span>会员列表</span><DArrowRight /></router-link></li>
-                        </ul>
+                        <div class="sl-name" @click="toggleSidebarMenu('user')">
+                              <User /><span>会员管理</span><ArrowRight :class="{'rotate':menuStatus.user}" />
+                        </div>
+                        <transition name="sidebar">
+                              <ul class="sl-child" v-show="menuStatus.user">
+                                    <li><router-link to="/"><span>会员列表</span><DArrowRight /></router-link></li>
+                              </ul>
+                        </transition>
                   </li>
                   <li>
-                        <router-link to="/" class="sl-name" @click="toggleSidebarMenu('admin')">
-                              <Postcard /><span>管理员管理</span><ArrowRight />
-                        </router-link>
-                        <ul class="sl-child" v-show="menuStatus.admin">
-                              <li><router-link to="/"><span>管理员列表</span><DArrowRight /></router-link></li>
-                              <li><router-link to="/"><span>管理员群组列表</span><DArrowRight /></router-link></li>
-                        </ul>
+                        <div class="sl-name" @click="toggleSidebarMenu('admin')">
+                              <Postcard /><span>管理员管理</span><ArrowRight :class="{'rotate':menuStatus.admin}" />
+                        </div>
+                        <transition name="sidebar">
+                              <ul class="sl-child" v-show="menuStatus.admin">
+                                    <li><router-link to="/"><span>管理员列表</span><DArrowRight /></router-link></li>
+                                    <li><router-link to="/"><span>管理员群组列表</span><DArrowRight /></router-link></li>
+                              </ul>
+                        </transition>
                   </li>
                   <li>
-                        <router-link to="/" class="sl-name" @click="toggleSidebarMenu('system')">
-                              <Setting /><span>系统管理</span><ArrowRight />
-                        </router-link>
-                        <ul class="sl-child" v-show="menuStatus.system">
-                              <li><router-link to="/"><span>网站设置</span><DArrowRight /></router-link></li>
-                        </ul>
+                        <div class="sl-name" @click="toggleSidebarMenu('system')">
+                              <Setting /><span>系统管理</span><ArrowRight :class="{'rotate':menuStatus.system}" />
+                        </div>
+                        <transition name="sidebar">
+                              <ul class="sl-child" v-show="menuStatus.system">
+                                    <li><router-link to="/"><span>网站设置</span><DArrowRight /></router-link></li>
+                              </ul>
+                        </transition>
                   </li>
             </ul>
       </div>
