@@ -11,11 +11,7 @@ const menuStatus = ref({
 });
 const toggleSidebarMenu = (menuType) => {
       Object.keys(menuStatus.value).forEach(key => {
-            if(key==menuType){
-                  menuStatus.value[menuType] = !menuStatus.value[menuType];
-            }else{
-                  menuStatus.value[key] = false;
-            }
+            menuStatus.value[key] = (key==menuType) ? !menuStatus.value[menuType] : false;
       });
 };
 </script>
@@ -40,7 +36,7 @@ const toggleSidebarMenu = (menuType) => {
                         </div>
                         <transition name="sidebar">
                         <ul class="sl-child" v-show="menuStatus.article">
-                              <li><router-link to="/"><span>文章列表</span><DArrowRight /></router-link></li>
+                              <li><router-link to="/article"><span>文章列表</span><DArrowRight /></router-link></li>
                               <li><router-link to="/"><span>文章分类列表</span><DArrowRight /></router-link></li>
                         </ul>
                         </transition>

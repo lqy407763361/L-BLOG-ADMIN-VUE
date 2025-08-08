@@ -16,7 +16,6 @@ const dropdownMenuStatus = ref(true);
 const changeDropdownMenu = () =>{
       dropdownMenuStatus.value = !dropdownMenuStatus.value;
 }
-
 </script>
 
 <template>
