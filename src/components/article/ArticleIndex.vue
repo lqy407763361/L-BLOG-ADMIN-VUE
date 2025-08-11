@@ -58,6 +58,45 @@ const clickSearch = () =>{
                                     <el-button type="primary" @click="clickSearch"><Search />&nbsp;搜索</el-button>
                               </el-form>
                         </div>
+                        <table class="table table-bordered table-hover">
+                              <thead>
+                                    <tr>
+                                          <td align="center"><input type="checkbox" name="check_all"></td>
+                                          <td align="left"><span>文章标题</span></td>
+                                          <td align="left">文章类型</td>
+                                          <td align="left"><span>状态</span>&nbsp;&nbsp;<CaretTop /></td>
+                                          <td align="left"><span>时间</span>&nbsp;&nbsp;<CaretTop /></td>
+                                          <td align="right">操作</td>
+                                    </tr>
+                              </thead>
+                              <tbody>
+                                    <tr>
+                                          <td align="center"><input type="checkbox" name="check_one[]" value=""></td>
+                                          <td align="text-left">文章标题1</td>
+                                          <td align="text-left">文章分类1</td>
+                                          <td align="left"><span style="color:green;">启用</span></td>
+                                          <td align="text-left">2025-08-11</td>
+                                          <td align="right"><router-link to=""><Edit /></router-link></td>
+                                    </tr>
+                                    <tr>
+                                          <td align="center"><input type="checkbox" name="check_one[]" value=""></td>
+                                          <td align="text-left">文章标题2</td>
+                                          <td align="text-left">文章分类2</td>
+                                          <td align="left"><span style="color:red;">禁用</span></td>
+                                          <td align="text-left">2025-08-11</td>
+                                          <td align="right"><router-link to=""><Edit /></router-link></td>
+                                    </tr>
+                                    <tr><td align="center" colspan="6" class="table-no-data">正在加载数据...</td></tr>
+                              </tbody>
+                        </table>
+                        <div class="page">
+                              <ul>
+                                    <li class="active"><span>1</span></li>
+                                    <li><router-link to="">2</router-link></li>
+                                    <li><router-link to="">3</router-link></li>
+                              </ul>
+                        </div>
+                        <div style="clear:both;"></div>
                   </div>
             </div>
             <CommonFooter />
