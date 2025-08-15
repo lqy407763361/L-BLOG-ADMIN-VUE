@@ -76,7 +76,7 @@ const clickSearch = () =>{
                                           <td align="text-left">文章分类1</td>
                                           <td align="left"><span style="color:green;">启用</span></td>
                                           <td align="text-left">2025-08-11</td>
-                                          <td align="right"><router-link to=""><Edit /></router-link></td>
+                                          <td align="right"><router-link to="/article:1"><Edit /></router-link></td>
                                     </tr>
                                     <tr>
                                           <td align="center"><input type="checkbox" name="check_one[]" value=""></td>

@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import IndexPage from '@/components/index/IndexPage.vue'
 import ArticleIndex from '@/components/article/ArticleIndex.vue'
+import ArticleDetail from '@/components/article/ArticleDetail.vue'
 import CommonNotFound from '@/components/common/CommonNotFound.vue'
 
 const routes = [
@@ -13,6 +14,11 @@ const routes = [
         path: '/article', 
         name: 'Article', 
         component: ArticleIndex,
+    },
+    { 
+        path: '/article/:id', 
+        name: 'ArticleDetail', 
+        component: ArticleDetail,
     },
     { 
         path: '/:pathMatch(.*)*',
