@@ -163,10 +163,11 @@ header{width:100%;border-bottom:1px solid #e5e5e5;position:fixed;background:#fff
 				a{color:#409eff;}
 			}
 		}
-		.content-form{
+		.content-form{margin-top:25px;
 			.el-form-item__label{width:18%;padding-right:30px;}
-			.ck-editor{width:100%;}
-			.ck-editor__editable_inline{min-height:300px;max-height:500px;overflow-y:auto;}
+			.ck-editor{width:100%;
+				.ck-editor__editable_inline{min-height:300px;max-height:500px;overflow-y:auto;}
+			}
 		}
 	}
 }

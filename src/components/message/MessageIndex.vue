@@ -6,7 +6,7 @@ import CommonBreadcrumb from '@/components/common/CommonBreadcrumb.vue'
 import CommonFooter from '@/components/common/CommonFooter.vue'
 
 const searchTitle = ref('');
-const searchCategory = ref('');
+const searchName = ref('');
 const searchStatus = ref('');
 const clickSearch = () =>{
       alert(123);
@@ -25,32 +25,27 @@ const clickSearch = () =>{
             </div>
             <div style="clear:both;"></div>
             <div class="content-box">
-                  <div class="content-title"><List />&nbsp;文章列表</div>
+                  <div class="content-title"><List />&nbsp;信息列表</div>
                   <div class="content-body">
                         <div class="content-search">
                               <el-form :model="form" label-position="top">
                                     <el-row>
                                           <el-col :span="8">
-                                                <el-form-item label="文章标题">
-                                                      <el-input v-model="searchTitle" maxlength="20" show-word-limit="true" placeholder="文章标题"/>
+                                                <el-form-item label="标题">
+                                                      <el-input v-model="searchTitle" maxlength="20" show-word-limit="true" placeholder="标题"/>
                                                 </el-form-item>
                                           </el-col>
                                           <el-col :span="8">
-                                                <el-form-item label="文章分类">
-                                                      <el-select v-model="searchCategory" placeholder="文章分类">
-                                                            <el-option value="" label="全部"/>
-                                                            <el-option value="1" label="文章分类1"/>
-                                                            <el-option value="2" label="文章分类2"/>
-                                                            <el-option value="3" label="文章分类3"/>
-                                                      </el-select>
+                                                <el-form-item label="发送人">
+                                                      <el-input v-model="searchName" maxlength="20" show-word-limit="true" placeholder="发送人"/>
                                                 </el-form-item>
                                           </el-col>
                                           <el-col :span="8">
                                                 <el-form-item label="状态">
                                                       <el-select v-model="searchStatus" placeholder="状态">
                                                             <el-option value="" label="全部"/>
-                                                            <el-option value="1" label="启用"/>
-                                                            <el-option value="2" label="禁用"/>
+                                                            <el-option value="1" label="已读"/>
+                                                            <el-option value="2" label="未读"/>
                                                       </el-select>
                                                 </el-form-item>
                                           </el-col>
@@ -62,8 +57,8 @@ const clickSearch = () =>{
                               <thead>
                                     <tr>
                                           <td align="center"><input type="checkbox" name="check_all"></td>
-                                          <td align="left"><span>文章标题</span></td>
-                                          <td align="left">文章类型</td>
+                                          <td align="left"><span>标题</span></td>
+                                          <td align="left">发送人</td>
                                           <td align="left"><span>状态</span>&nbsp;&nbsp;<CaretTop /></td>
                                           <td align="left"><span>时间</span>&nbsp;&nbsp;<CaretTop /></td>
                                           <td align="right">操作</td>
@@ -72,17 +67,17 @@ const clickSearch = () =>{
                               <tbody>
                                     <tr>
                                           <td align="center"><input type="checkbox" name="check_one[]" value=""></td>
-                                          <td align="left">文章标题1</td>
-                                          <td align="left">文章分类1</td>
-                                          <td align="left"><span style="color:green;">启用</span></td>
+                                          <td align="left">标题1</td>
+                                          <td align="left">发送人1</td>
+                                          <td align="left"><span style="color:green;">已读</span></td>
                                           <td align="left">2025-08-11</td>
-                                          <td align="right"><router-link to="/article/1"><Edit /></router-link></td>
+                                          <td align="right"><router-link to="/message/1"><Edit /></router-link></td>
                                     </tr>
                                     <tr>
                                           <td align="center"><input type="checkbox" name="check_one[]" value=""></td>
-                                          <td align="left">文章标题2</td>
-                                          <td align="left">文章分类2</td>
-                                          <td align="left"><span style="color:red;">禁用</span></td>
+                                          <td align="left">标题2</td>
+                                          <td align="left">发送人2</td>
+                                          <td align="left"><span style="color:red;">未读</span></td>
                                           <td align="left">2025-08-11</td>
                                           <td align="right"><router-link to=""><Edit /></router-link></td>
                                     </tr>

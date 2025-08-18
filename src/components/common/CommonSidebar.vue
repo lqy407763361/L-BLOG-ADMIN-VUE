@@ -37,7 +37,7 @@ const toggleSidebarMenu = (menuType) => {
                         <transition name="sidebar">
                         <ul class="sl-child" v-show="menuStatus.article">
                               <li><router-link to="/article"><span>文章列表</span><DArrowRight /></router-link></li>
-                              <li><router-link to="/"><span>文章分类列表</span><DArrowRight /></router-link></li>
+                              <li><router-link to="/articleCategory"><span>文章分类列表</span><DArrowRight /></router-link></li>
                         </ul>
                         </transition>
                   </li>
@@ -47,7 +47,7 @@ const toggleSidebarMenu = (menuType) => {
                         </div>
                         <transition name="sidebar">
                               <ul class="sl-child" v-show="menuStatus.page">
-                                    <li><router-link to="/"><span>关于我</span><DArrowRight /></router-link></li>
+                                    <li><router-link to="/about"><span>关于我</span><DArrowRight /></router-link></li>
                               </ul>
                         </transition>
                   </li>
@@ -57,7 +57,7 @@ const toggleSidebarMenu = (menuType) => {
                         </div>
                         <transition name="sidebar">
                               <ul class="sl-child" v-show="menuStatus.message">
-                                    <li><router-link to="/"><span>我的新消息</span><DArrowRight /></router-link></li>
+                                    <li><router-link to="/message"><span>我的新消息</span><DArrowRight /></router-link></li>
                               </ul>
                         </transition>
                   </li>
@@ -67,7 +67,7 @@ const toggleSidebarMenu = (menuType) => {
                         </div>
                         <transition name="sidebar">
                               <ul class="sl-child" v-show="menuStatus.user">
-                                    <li><router-link to="/"><span>会员列表</span><DArrowRight /></router-link></li>
+                                    <li><router-link to="/user"><span>会员列表</span><DArrowRight /></router-link></li>
                               </ul>
                         </transition>
                   </li>
@@ -77,8 +77,8 @@ const toggleSidebarMenu = (menuType) => {
                         </div>
                         <transition name="sidebar">
                               <ul class="sl-child" v-show="menuStatus.admin">
-                                    <li><router-link to="/"><span>管理员列表</span><DArrowRight /></router-link></li>
-                                    <li><router-link to="/"><span>管理员群组列表</span><DArrowRight /></router-link></li>
+                                    <li><router-link to="/admin"><span>管理员列表</span><DArrowRight /></router-link></li>
+                                    <li><router-link to="/adminGroup"><span>管理员群组列表</span><DArrowRight /></router-link></li>
                               </ul>
                         </transition>
                   </li>
@@ -88,7 +88,7 @@ const toggleSidebarMenu = (menuType) => {
                         </div>
                         <transition name="sidebar">
                               <ul class="sl-child" v-show="menuStatus.system">
-                                    <li><router-link to="/"><span>网站设置</span><DArrowRight /></router-link></li>
+                                    <li><router-link to="/siteConfig"><span>网站设置</span><DArrowRight /></router-link></li>
                               </ul>
                         </transition>
                   </li>
