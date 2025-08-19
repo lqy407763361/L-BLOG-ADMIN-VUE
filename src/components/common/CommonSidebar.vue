@@ -88,7 +88,7 @@ const toggleSidebarMenu = (menuType) => {
                         </div>
                         <transition name="sidebar">
                               <ul class="sl-child" v-show="menuStatus.system">
-                                    <li><router-link to="/siteConfig"><span>网站设置</span><DArrowRight /></router-link></li>
+                                    <li><router-link to="/SiteConfig"><span>网站设置</span><DArrowRight /></router-link></li>
                               </ul>
                         </transition>
                   </li>

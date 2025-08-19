@@ -11,48 +11,54 @@ import UserIndex from '@/components/user/UserIndex.vue'
 import UserDetail from '@/components/user/UserDetail.vue'
 import AdminIndex from '@/components/admin/AdminIndex.vue'
 import AdminDetail from '@/components/admin/AdminDetail.vue'
+import AdminGroupIndex from '@/components/adminGroup/AdminGroupIndex.vue'
+import AdminGroupDetail from '@/components/adminGroup/AdminGroupDetail.vue'
+import SiteConfigPage from '@/components/siteConfig/SiteConfigPage.vue'
 import CommonNotFound from '@/components/common/CommonNotFound.vue'
 
 const routes = [
     { 
         path: '/', 
-        name: 'Index', 
+        name: 'IndexPage', 
         component: IndexPage,
     },
     { 
         path: '/article', 
-        name: 'Article', 
+        name: 'ArticleIndex', 
         component: ArticleIndex,
     },
     { 
         path: '/article/:id', 
         name: 'ArticleDetail', 
         component: ArticleDetail,
+        props: true
     },
     { 
         path: '/articleCategory', 
-        name: 'ArticleCategory', 
+        name: 'ArticleCategoryIndex', 
         component: ArticleCategoryIndex,
     },
     { 
         path: '/articleCategory/:id', 
         name: 'ArticleCategoryDetail', 
         component: ArticleCategoryDetail,
+        props: true
     },
     { 
         path: '/about', 
-        name: 'About', 
+        name: 'AboutPage', 
         component: AboutPage,
     },
     { 
         path: '/message', 
-        name: 'Message', 
+        name: 'MessageIndex', 
         component: MessageIndex,
     },
     { 
         path: '/message/:id', 
         name: 'MessageDetail', 
         component: MessageDetail,
+        props: true
     },
     { 
         path: '/user', 
@@ -63,6 +69,7 @@ const routes = [
         path: '/user/:id', 
         name: 'UserDetail', 
         component: UserDetail,
+        props: true
     },
     { 
         path: '/admin', 
@@ -73,6 +80,22 @@ const routes = [
         path: '/admin/:id', 
         name: 'AdminDetail', 
         component: AdminDetail,
+        props: true
+    },
+    { 
+        path: '/adminGroup', 
+        name: 'AdminGroupIndex', 
+        component: AdminGroupIndex,
+    },
+    { 
+        path: '/adminGroup/:id', 
+        name: 'AdminGroupDetail', 
+        component: AdminGroupDetail,
+    },
+    { 
+        path: '/SiteConfig', 
+        name: 'SiteConfigPage', 
+        component: SiteConfigPage,
     },
     { 
         path: '/:pathMatch(.*)*',
