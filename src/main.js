@@ -6,14 +6,20 @@ import router from './router'
 // ElementPlus
 import ElementPlus from 'element-plus'
 import 'element-plus/dist/index.css'
-import * as ElementPlusIconsVue from '@element-plus/icons-vue'
+
+// FontAwesomeIcon
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+import { fas } from '@fortawesome/free-solid-svg-icons'
+import { far } from '@fortawesome/free-regular-svg-icons'
+import { fab } from '@fortawesome/free-brands-svg-icons'
+library.add(fas, far, fab)
 
 const app = createApp(App)
 const head = createHead()
 app.use(head)
 app.use(router)
 app.use(ElementPlus)
-for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
-    app.component(key, component)
-}
+app.component('font-awesome-icon', FontAwesomeIcon)
+
 app.mount('#app')

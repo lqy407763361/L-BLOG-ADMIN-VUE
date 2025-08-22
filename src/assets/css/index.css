@@ -4,9 +4,9 @@ a{text-decoration:none;cursor:pointer;}
 h1,h2{line-height:1.1;margin-top:20px;margin-bottom:10px;}
 ul{list-style:none;padding:0px;margin-top:0px;}
 .fade{display:none;}
-.not-found{font-size:2.2rem;}
+.not-found{font-size:2.2rem;margin-left:30px;}
 @keyframes run{from{margin-left:10px;}to{margin-left:20px;}}
-.default-msg,.info-msg,.warning-msg,.danger-msg{padding:8px 12px;border-radius:3px;display:inline-block;cursor:pointer;}
+.default-msg,.info-msg,.warning-msg,.danger-msg{padding:9px 12px;border-radius:3px;display:inline-block;cursor:pointer;}
 .default-msg{background:#fff;color:#333;
 	&:hover{background:#ecf5ff;}
 }
@@ -128,7 +128,7 @@ header{width:100%;border-bottom:1px solid #e5e5e5;position:fixed;background:#fff
 	}
 }
 
-/* list */
+/* list or detail */
 .operation-bar{float:right;margin-top:20px;
 	a:not(:first-child){margin-left:3px;}
 	svg{width:1.4rem;height:1.4rem;}
@@ -168,6 +168,18 @@ header{width:100%;border-bottom:1px solid #e5e5e5;position:fixed;background:#fff
 			.ck-editor{width:100%;
 				.ck-editor__editable_inline{min-height:300px;max-height:500px;overflow-y:auto;}
 			}
+			.logo-image-upload .el-upload{width:100px;height:100px;display:flex;justify-content:center;align-items:center;border:1px dashed #f1f3f5;border-radius:6px;
+				&:hover{cursor:pointer;border:1px dashed #409eff;}
+				svg{color:#9198a1;}
+			}
 		}
+	}
+}
+
+/* login */
+.login-content{padding-top:56px;font-size:1.4rem;
+	.login-box{margin-top:40px;margin-left:33.3%;width:32%;border:1px solid #E5E5E5;border-radius:3px;
+		.login-title{background:#fcfcfc;padding:10px 15px;border-bottom:1px solid #E5E5E5;}
+		.login-form{margin:15px 15px 30px 15px;}
 	}
 }

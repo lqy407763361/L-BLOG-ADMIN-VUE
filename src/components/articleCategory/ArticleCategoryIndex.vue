@@ -19,12 +19,12 @@ const clickSearch = () =>{
       <div class="content">
             <CommonBreadcrumb />
             <div class="operation-bar">
-                  <router-link to="/" class="info-msg"><Plus /></router-link>
-                  <router-link to="#" class="danger-msg"><Delete /></router-link>
+                  <router-link to="/" class="info-msg"><font-awesome-icon icon="fa-solid fa-plus" /></router-link>
+                  <router-link to="#" class="danger-msg"><font-awesome-icon icon="fa-solid fa-trash-can" /></router-link>
             </div>
             <div style="clear:both;"></div>
             <div class="content-box">
-                  <div class="content-title"><List />&nbsp;文章分类列表</div>
+                  <div class="content-title"><font-awesome-icon icon="fa-solid fa-list" />&nbsp;文章分类列表</div>
                   <div class="content-body">
                         <div class="content-search">
                               <el-form :model="form" label-position="top">
@@ -44,7 +44,7 @@ const clickSearch = () =>{
                                                 </el-form-item>
                                           </el-col>
                                     </el-row>
-                                    <el-button type="primary" @click="clickSearch"><Search />&nbsp;搜索</el-button>
+                                    <el-button type="primary" @click="clickSearch"><font-awesome-icon icon="fa-solid fa-magnifying-glass" />&nbsp;搜索</el-button>
                               </el-form>
                         </div>
                         <table class="table table-bordered table-hover">
@@ -52,8 +52,8 @@ const clickSearch = () =>{
                                     <tr>
                                           <td align="center"><input type="checkbox" name="check_all"></td>
                                           <td align="left"><span>文章类型名称</span></td>
-                                          <td align="left"><span>状态</span>&nbsp;&nbsp;<CaretTop /></td>
-                                          <td align="left"><span>时间</span>&nbsp;&nbsp;<CaretTop /></td>
+                                          <td align="left"><span>状态</span>&nbsp;&nbsp;<font-awesome-icon icon="fa-solid fa-caret-up" /></td>
+                                          <td align="left"><span>时间</span>&nbsp;&nbsp;<font-awesome-icon icon="fa-solid fa-caret-up" /></td>
                                           <td align="right">操作</td>
                                     </tr>
                               </thead>
@@ -63,14 +63,14 @@ const clickSearch = () =>{
                                           <td align="left">文章类型名称1</td>
                                           <td align="left"><span style="color:green;">启用</span></td>
                                           <td align="left">2025-08-11</td>
-                                          <td align="right"><router-link to="/articleCategory/1"><Edit /></router-link></td>
+                                          <td align="right"><router-link to="/articleCategory/1"><font-awesome-icon icon="fa-solid fa-pen-to-square" /></router-link></td>
                                     </tr>
                                     <tr>
                                           <td align="center"><input type="checkbox" name="check_one[]" value=""></td>
                                           <td align="left">文章类型名称2</td>
                                           <td align="left"><span style="color:red;">禁用</span></td>
                                           <td align="left">2025-08-11</td>
-                                          <td align="right"><router-link to=""><Edit /></router-link></td>
+                                          <td align="right"><router-link to=""><font-awesome-icon icon="fa-solid fa-pen-to-square" /></router-link></td>
                                     </tr>
                                     <tr><td align="center" colspan="6" class="table-no-data">正在加载数据...</td></tr>
                               </tbody>

@@ -19,12 +19,12 @@ const clickSearch = () =>{
       <div class="content">
             <CommonBreadcrumb />
             <div class="operation-bar">
-                  <router-link to="/" class="info-msg"><Plus /></router-link>
-                  <router-link to="#" class="danger-msg"><Delete /></router-link>
+                  <router-link to="/" class="info-msg"><font-awesome-icon icon="fa-solid fa-plus" /></router-link>
+                  <router-link to="#" class="danger-msg"><font-awesome-icon icon="fa-solid fa-trash-can" /></router-link>
             </div>
             <div style="clear:both;"></div>
             <div class="content-box">
-                  <div class="content-title"><List />&nbsp;会员列表</div>
+                  <div class="content-title"><font-awesome-icon icon="fa-solid fa-list" />&nbsp;会员列表</div>
                   <div class="content-body">
                         <div class="content-search">
                               <el-form :model="form" label-position="top">
@@ -52,9 +52,9 @@ const clickSearch = () =>{
                                     <tr>
                                           <td align="center"><input type="checkbox" name="check_all"></td>
                                           <td align="left"><span>会员账号</span></td>
-                                          <td align="left"><span>状态</span>&nbsp;&nbsp;<CaretTop /></td>
-                                          <td align="left"><span>注册时间</span>&nbsp;&nbsp;<CaretTop /></td>
-                                          <td align="left"><span>最后登录时间</span>&nbsp;&nbsp;<CaretTop /></td>
+                                          <td align="left"><span>状态</span>&nbsp;&nbsp;<font-awesome-icon icon="fa-solid fa-caret-up" /></td>
+                                          <td align="left"><span>注册时间</span>&nbsp;&nbsp;<font-awesome-icon icon="fa-solid fa-caret-up" /></td>
+                                          <td align="left"><span>最后登录时间</span>&nbsp;&nbsp;<font-awesome-icon icon="fa-solid fa-caret-up" /></td>
                                           <td align="right">操作</td>
                                     </tr>
                               </thead>
@@ -65,7 +65,7 @@ const clickSearch = () =>{
                                           <td align="left"><span style="color:green;">启用</span></td>
                                           <td align="left">2025-08-11</td>
                                           <td align="left">2025-08-11</td>
-                                          <td align="right"><router-link to="/user/1"><Edit /></router-link></td>
+                                          <td align="right"><router-link to="/user/1"><font-awesome-icon icon="fa-solid fa-pen-to-square" /></router-link></td>
                                     </tr>
                                     <tr>
                                           <td align="center"><input type="checkbox" name="check_one[]" value=""></td>
@@ -73,7 +73,7 @@ const clickSearch = () =>{
                                           <td align="left"><span style="color:red;">禁用</span></td>
                                           <td align="left">2025-08-11</td>
                                           <td align="left">2025-08-11</td>
-                                          <td align="right"><router-link to=""><Edit /></router-link></td>
+                                          <td align="right"><router-link to=""><font-awesome-icon icon="fa-solid fa-pen-to-square" /></router-link></td>
                                     </tr>
                                     <tr><td align="center" colspan="6" class="table-no-data">正在加载数据...</td></tr>
                               </tbody>

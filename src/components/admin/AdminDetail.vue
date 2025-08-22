@@ -21,12 +21,11 @@ const description = ref('');
       <div class="content">
             <CommonBreadcrumb />
             <div class="operation-bar">
-                  <router-link to="/" class="info-msg"><Plus /></router-link>
-                  <router-link to="#" class="danger-msg"><Delete /></router-link>
+                  <router-link to="/" class="info-msg"><font-awesome-icon icon="fa-solid fa-floppy-disk" /></router-link>
             </div>
             <div style="clear:both;"></div>
             <div class="content-box">
-                  <div class="content-title"><List />&nbsp;管理员列表</div>
+                  <div class="content-title"><font-awesome-icon icon="fa-solid fa-pencil" />&nbsp;管理员列表</div>
                   <div class="content-body">
                         <div class="content-search">
                               <el-row>

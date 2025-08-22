@@ -14,6 +14,7 @@ import AdminDetail from '@/components/admin/AdminDetail.vue'
 import AdminGroupIndex from '@/components/adminGroup/AdminGroupIndex.vue'
 import AdminGroupDetail from '@/components/adminGroup/AdminGroupDetail.vue'
 import SiteConfigPage from '@/components/siteConfig/SiteConfigPage.vue'
+import CommonLogin from '@/components/common/CommonLogin.vue'
 import CommonNotFound from '@/components/common/CommonNotFound.vue'
 
 const routes = [
@@ -96,6 +97,11 @@ const routes = [
         path: '/SiteConfig', 
         name: 'SiteConfigPage', 
         component: SiteConfigPage,
+    },
+    { 
+        path: '/login', 
+        name: 'CommonLogin', 
+        component: CommonLogin,
     },
     { 
         path: '/:pathMatch(.*)*',

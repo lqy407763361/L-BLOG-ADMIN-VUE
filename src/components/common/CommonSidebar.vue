@@ -27,12 +27,12 @@ const toggleSidebarMenu = (menuType) => {
             <ul class="sidebar-list">
                   <li>
                         <router-link to="/" replace>
-                              <Odometer /><span>仪表盘</span>
+                              <font-awesome-icon icon="fa-solid fa-gauge" /><span>仪表盘</span>
                         </router-link>
                   </li>
                   <li>
                         <div class="sl-name" @click="toggleSidebarMenu('article')">
-                              <Document /><span>文章管理</span><ArrowRight :class="{'rotate':menuStatus.article}" />
+                              <font-awesome-icon icon="fa-solid fa-newspaper" /><span>文章管理</span><ArrowRight :class="{'rotate':menuStatus.article}" />
                         </div>
                         <transition name="sidebar">
                         <ul class="sl-child" v-show="menuStatus.article">
@@ -43,7 +43,7 @@ const toggleSidebarMenu = (menuType) => {
                   </li>
                   <li>
                         <div class="sl-name" @click="toggleSidebarMenu('page')">
-                              <Reading /><span>单页管理</span><ArrowRight :class="{'rotate':menuStatus.page}" />
+                              <font-awesome-icon icon="fa-solid fa-file-lines" /><span>单页管理</span><ArrowRight :class="{'rotate':menuStatus.page}" />
                         </div>
                         <transition name="sidebar">
                               <ul class="sl-child" v-show="menuStatus.page">
@@ -53,7 +53,7 @@ const toggleSidebarMenu = (menuType) => {
                   </li>
                   <li>
                         <div class="sl-name" @click="toggleSidebarMenu('message')">
-                              <Message /><span>信息管理</span><ArrowRight :class="{'rotate':menuStatus.message}" />
+                              <font-awesome-icon icon="fa-solid fa-envelope" /><span>信息管理</span><ArrowRight :class="{'rotate':menuStatus.message}" />
                         </div>
                         <transition name="sidebar">
                               <ul class="sl-child" v-show="menuStatus.message">
@@ -63,7 +63,7 @@ const toggleSidebarMenu = (menuType) => {
                   </li>
                   <li>
                         <div class="sl-name" @click="toggleSidebarMenu('user')">
-                              <User /><span>会员管理</span><ArrowRight :class="{'rotate':menuStatus.user}" />
+                              <font-awesome-icon icon="fa-solid fa-user" /><span>会员管理</span><ArrowRight :class="{'rotate':menuStatus.user}" />
                         </div>
                         <transition name="sidebar">
                               <ul class="sl-child" v-show="menuStatus.user">
@@ -73,7 +73,7 @@ const toggleSidebarMenu = (menuType) => {
                   </li>
                   <li>
                         <div class="sl-name" @click="toggleSidebarMenu('admin')">
-                              <Postcard /><span>管理员管理</span><ArrowRight :class="{'rotate':menuStatus.admin}" />
+                              <font-awesome-icon icon="fa-solid fa-id-card" /><span>管理员管理</span><ArrowRight :class="{'rotate':menuStatus.admin}" />
                         </div>
                         <transition name="sidebar">
                               <ul class="sl-child" v-show="menuStatus.admin">
@@ -84,7 +84,7 @@ const toggleSidebarMenu = (menuType) => {
                   </li>
                   <li>
                         <div class="sl-name" @click="toggleSidebarMenu('system')">
-                              <Setting /><span>系统管理</span><ArrowRight :class="{'rotate':menuStatus.system}" />
+                              <font-awesome-icon icon="fa-solid fa-gear" /><span>系统管理</span><ArrowRight :class="{'rotate':menuStatus.system}" />
                         </div>
                         <transition name="sidebar">
                               <ul class="sl-child" v-show="menuStatus.system">

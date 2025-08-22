@@ -17,12 +17,11 @@ const content = ref('');
       <div class="content">
             <CommonBreadcrumb />
             <div class="operation-bar">
-                  <router-link to="/" class="info-msg"><Plus /></router-link>
-                  <router-link to="#" class="danger-msg"><Delete /></router-link>
+                  <router-link to="/" class="info-msg"><font-awesome-icon icon="fa-solid fa-floppy-disk" /></router-link>
             </div>
             <div style="clear:both;"></div>
             <div class="content-box">
-                  <div class="content-title"><List />&nbsp;文章列表</div>
+                  <div class="content-title"><font-awesome-icon icon="fa-solid fa-pencil" />&nbsp;文章列表</div>
                   <div class="content-body">
                         <el-form :model="form" label-position="auto" class="content-form">
                               <el-form-item label="标题" label-position="right">

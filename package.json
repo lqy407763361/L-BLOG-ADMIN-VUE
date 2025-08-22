@@ -10,7 +10,11 @@
   },
   "dependencies": {
     "@ckeditor/ckeditor5-vue": "^7.3.0",
-    "@element-plus/icons-vue": "^2.3.1",
+    "@fortawesome/fontawesome-svg-core": "^7.0.0",
+    "@fortawesome/free-brands-svg-icons": "^7.0.0",
+    "@fortawesome/free-regular-svg-icons": "^7.0.0",
+    "@fortawesome/free-solid-svg-icons": "^7.0.0",
+    "@fortawesome/vue-fontawesome": "^3.1.1",
     "@vueuse/head": "^2.0.0",
     "ckeditor5": "^46.0.1",
     "echarts": "^6.0.0",

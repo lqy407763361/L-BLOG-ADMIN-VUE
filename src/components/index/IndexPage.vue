@@ -36,22 +36,22 @@ const { chartBody } = useECharts(echartsData);
             <div class="statistics-number">
                   <div class="preview">
                         <div class="title">文章数量</div>
-                        <div class="body"><Document class="preview-icon"/><span>99</span></div>
+                        <div class="body"><font-awesome-icon icon="fa-solid fa-newspaper" class="preview-icon"/><span>99</span></div>
                         <div class="move"><a href="">查看更多</a></div>
                   </div>
                   <div class="preview">
                         <div class="title">消息数量</div>
-                        <div class="body"><Message class="preview-icon"/><span>99</span></div>
+                        <div class="body"><font-awesome-icon icon="fa-solid fa-envelope" class="preview-icon"/><span>99</span></div>
                         <div class="move"><a href="">查看更多</a></div>
                   </div>
                   <div class="preview">
                         <div class="title">会员数量</div>
-                        <div class="body"><User class="preview-icon"/><span>99</span></div>
+                        <div class="body"><font-awesome-icon icon="fa-solid fa-user" class="preview-icon"/><span>99</span></div>
                         <div class="move"><a href="">查看更多</a></div>
                   </div>
                   <div class="preview">
                         <div class="title">管理员数量</div>
-                        <div class="body"><Postcard class="preview-icon"/><span>99</span></div>
+                        <div class="body"><font-awesome-icon icon="fa-solid fa-id-card" class="preview-icon"/><span>99</span></div>
                         <div class="move"><a href="">查看更多</a></div>
                   </div>
             </div>
