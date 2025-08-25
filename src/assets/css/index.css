@@ -95,7 +95,7 @@ header{width:100%;border-bottom:1px solid #e5e5e5;position:fixed;background:#fff
 	.breadcrumb{display:inline-block;font-size:1.2rem;padding:8px 15px;margin-bottom:20px;border-radius:4px;
 		li{display:inline-block;
 			a{color:#337ab7;}
-			.active{color:#777;}
+			span{color:#777;}
 		}
 		li+li::before{content:"/";font-family:FontAwesome;color:#BBBBBB;padding:0 5px;}
 	}

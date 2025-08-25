@@ -20,21 +20,21 @@ const changeDropdownMenu = () =>{
 
 <template>
       <header>
-            <h1><a href="/">L-BLOG</a></h1>
+            <h1><router-link to="/">L-BLOG</router-link></h1>
             <ul class="nav">
                   <li class="dropdown" @click="changeDropdownMenu"><a><span class="danger-msg">99</span><font-awesome-icon icon="fa-solid fa-bell" class="header-icon"/></a>
                         <ul class="dropdown-menu" :class="{'fade': dropdownMenuStatus}">
                               <li class="dropdown-header">消息</li>
-                              <li><a href="">新消息 <span class="warning-msg">99</span></a></li>
-                              <li><a href="">所有消息 <span class="info-msg">99</span></a></li>
+                              <li><router-link to="/message">新消息 <span class="warning-msg">99</span></router-link></li>
+                              <li><router-link to="/message">所有消息 <span class="info-msg">99</span></router-link></li>
                               <li class="divider"></li>
                               <li class="dropdown-header">会员</li>
-                              <li><a href="">新会员 <span class="warning-msg">99</span></a></li>
-                              <li><a href="">注册会员 <span class="info-msg">99</span></a></li>
+                              <li><router-link to="/user">新会员 <span class="warning-msg">99</span></router-link></li>
+                              <li><router-link to="/user">注册会员 <span class="info-msg">99</span></router-link></li>
                         </ul>
                   </li>
-                  <li><a href="" target="_blank"><font-awesome-icon icon="fa-solid fa-house" class="header-icon"/></a></li>
-                  <li><a href="">退出登录&nbsp;<font-awesome-icon icon="fa-solid fa-right-from-bracket" class="header-icon"/></a></li>
+                  <li><router-link to="/"><font-awesome-icon icon="fa-solid fa-house" class="header-icon"/></router-link></li>
+                  <li><a>退出登录&nbsp;<font-awesome-icon icon="fa-solid fa-right-from-bracket" class="header-icon"/></a></li>
             </ul>
             <div style="clear:both;"></div>
       </header>

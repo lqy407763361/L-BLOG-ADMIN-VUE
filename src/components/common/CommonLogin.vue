@@ -13,7 +13,7 @@ const login = () => {
 
 <template>
       <header>
-            <h1><a href="/">L-BLOG</a></h1>
+            <h1>L-BLOG</h1>
       </header>
       <div class="login-content">
             <div class="login-box">
