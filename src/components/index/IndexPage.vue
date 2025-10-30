@@ -91,15 +91,15 @@ const { chartBody } = useECharts(echartsData);
                         <div class="panel-body">
                               <ul>
                                     <li>您好，{{ adminDetail.name }}</li>
-                                    <li>所属角色：管理员群组</li>
+                                    <li>所属角色：{{ adminDetail.groupName }}</li>
                               </ul>
                               <ul>
                                     <li>您上次登录时间为：2025-07-14</li>
-                                    <li>IP地址：127.0.0.1</li>
+                                    <li>IP地址：{{ adminDetail.prevLoginIp }}</li>
                               </ul>
                               <ul>
                                     <li>您本次登录时间为：2025-07-14</li>
-                                    <li>IP地址：127.0.0.1</li>
+                                    <li>IP地址：{{ adminDetail.lastLoginIp }}</li>
                               </ul>
                         </div>
                   </div>
