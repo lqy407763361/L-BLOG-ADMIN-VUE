@@ -9,6 +9,7 @@ import { articleApi } from '@/api/articleApi'
 import { messageApi } from '@/api/messageApi'
 import { userApi } from '@/api/userApi'
 import { adminApi } from '@/api/adminApi'
+import { formatDate } from '@/util/dateUtil'
 
 //获取API接口
 const articleTotal = ref(0);
@@ -94,11 +95,11 @@ const { chartBody } = useECharts(echartsData);
                                     <li>所属角色：{{ adminDetail.groupName }}</li>
                               </ul>
                               <ul>
-                                    <li>您上次登录时间为：2025-07-14</li>
+                                    <li>您上次登录时间为：{{ formatDate(adminDetail.prevLoginTime) }}</li>
                                     <li>IP地址：{{ adminDetail.prevLoginIp }}</li>
                               </ul>
                               <ul>
-                                    <li>您本次登录时间为：2025-07-14</li>
+                                    <li>您本次登录时间为：{{ formatDate(adminDetail.lastLoginTime) }}</li>
                                     <li>IP地址：{{ adminDetail.lastLoginIp }}</li>
                               </ul>
                         </div>
