@@ -4,6 +4,9 @@ import CommonHeader from '@/components/common/CommonHeader.vue'
 import CommonSidebar from '@/components/common/CommonSidebar.vue'
 import CommonBreadcrumb from '@/components/common/CommonBreadcrumb.vue'
 import CommonFooter from '@/components/common/CommonFooter.vue'
+import { articleApi } from '@/api/articleApi'
+import { formatDate } from '@/util/dateUtil'
+import { pageTotal } from '@/util/pageTotal'
 
 const searchTitle = ref('');
 const searchCategory = ref('');
@@ -11,6 +14,18 @@ const searchStatus = ref('');
 const clickSearch = () =>{
       alert(123);
 }
+
+//获取API接口
+const articleList = ref({});
+const indexPageApi = async() => {
+      //获取文章列表
+      const getArticleList = await articleApi.getArticleList({
+            startPage: 1,
+            size: 1
+      });
+      articleList.value = getArticleList.data;
+}
+indexPageApi();
 </script>
 
 <template>
@@ -70,30 +85,25 @@ const clickSearch = () =>{
                                     </tr>
                               </thead>
                               <tbody>
-                                    <tr>
-                                          <td align="center"><input type="checkbox" name="check_one[]" value=""></td>
-                                          <td align="left">文章标题1</td>
-                                          <td align="left">文章分类1</td>
-                                          <td align="left"><span style="color:green;">启用</span></td>
-                                          <td align="left">2025-08-11</td>
-                                          <td align="right"><router-link to="/article/1"><font-awesome-icon icon="fa-solid fa-pen-to-square" /></router-link></td>
+                                    <tr v-for="(article) in articleList.list" :key="article.id">
+                                          <td align="center"><input type="checkbox" name="check_one[]" value="{{ article.id }}"></td>
+                                          <td align="left">{{ article.title }}</td>
+                                          <td align="left">{{ article.categoryName }}</td>
+                                          <td align="left"><span v-if="article.status == 1" style="color:green;">启用</span><span v-else style="color:red;">禁用</span></td>
+                                          <td align="left">{{ formatDate(article.addTime) }}</td>
+                                          <td align="right"><router-link :to="`/article/${ article.id }`"><font-awesome-icon icon="fa-solid fa-pen-to-square" /></router-link></td>
                                     </tr>
-                                    <tr>
-                                          <td align="center"><input type="checkbox" name="check_one[]" value=""></td>
-                                          <td align="left">文章标题2</td>
-                                          <td align="left">文章分类2</td>
-                                          <td align="left"><span style="color:red;">禁用</span></td>
-                                          <td align="left">2025-08-11</td>
-                                          <td align="right"><router-link to=""><font-awesome-icon icon="fa-solid fa-pen-to-square" /></router-link></td>
-                                    </tr>
-                                    <tr><td align="center" colspan="6" class="table-no-data">正在加载数据...</td></tr>
+                                    <tr v-if="!articleList.list || articleList.list.length == 0"><td align="center" colspan="6" class="table-no-data">正在加载数据...</td></tr>
                               </tbody>
                         </table>
                         <div class="page">
                               <ul>
-                                    <li class="active"><span>1</span></li>
-                                    <li><router-link to="">2</router-link></li>
-                                    <li><router-link to="">3</router-link></li>
+                                    <li v-for="page in pageTotal(articleList.total, articleList.size)" 
+                                          :key="page"
+                                          :class="{ active: page==articleList.startPage}">
+                                          <span v-if="page==articleList.startPage">{{ page }}</span>
+                                          <router-link v-else :to="`/article?page=${ page }`">{{ page }}</router-link>
+                                    </li>
                               </ul>
                         </div>
                         <div style="clear:both;"></div>

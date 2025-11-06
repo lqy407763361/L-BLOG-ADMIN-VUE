@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 import useECharts from '@/assets/js/useECharts.js'
 import CommonHeader from '@/components/common/CommonHeader.vue'
 import CommonSidebar from '@/components/common/CommonSidebar.vue'
@@ -42,22 +42,27 @@ const indexPageApi = async() => {
 indexPageApi();
 
 //图表配置
-const echartsData = ref({
-      title: {},
-      tooltip: {},
-      xAxis: {
-            data: lastWeekVisitsList.value.weekList
-      },
-      yAxis: {},
-      series: [{
-            name: '访问人数',
-            type: 'bar',
-            data: lastWeekVisitsList.value.visitList,
-            itemStyle: {  
-                  normal:{color:'#ab78ba'}  
-            }  
-      }]
-});
+const echartsData = ref({});
+watch(lastWeekVisitsList, (newValue) => {
+      if(newValue.weekList && newValue.visitList){
+            echartsData.value = {
+                  title: {},
+                  tooltip: {},
+                  xAxis: {
+                        data: newValue.weekList
+                  },
+                  yAxis: {},
+                  series: [{
+                        name: '访问人数',
+                        type: 'bar',
+                        data: newValue.visitList,
+                        itemStyle: {  
+                              normal:{color:'#ab78ba'}
+                        }  
+                  }]
+            };
+      }
+}, {deep: true});
 const { chartBody } = useECharts(echartsData);
 </script>
 
@@ -72,22 +77,22 @@ const { chartBody } = useECharts(echartsData);
                   <div class="preview">
                         <div class="title">文章数量</div>
                         <div class="body"><font-awesome-icon icon="fa-solid fa-newspaper" class="preview-icon"/><span>{{ articleTotal }}</span></div>
-                        <div class="move"><a href="">查看更多</a></div>
+                        <div class="move"><router-link to="/article">查看更多</router-link></div>
                   </div>
                   <div class="preview">
                         <div class="title">消息数量</div>
                         <div class="body"><font-awesome-icon icon="fa-solid fa-envelope" class="preview-icon"/><span>{{ messageTotal }}</span></div>
-                        <div class="move"><a href="">查看更多</a></div>
+                        <div class="move"><router-link to="/message">查看更多</router-link></div>
                   </div>
                   <div class="preview">
                         <div class="title">会员数量</div>
                         <div class="body"><font-awesome-icon icon="fa-solid fa-user" class="preview-icon"/><span>{{ userTotal }}</span></div>
-                        <div class="move"><a href="">查看更多</a></div>
+                        <div class="move"><router-link to="/user">查看更多</router-link></div>
                   </div>
                   <div class="preview">
                         <div class="title">管理员数量</div>
                         <div class="body"><font-awesome-icon icon="fa-solid fa-id-card" class="preview-icon"/><span>{{ adminTotal }}</span></div>
-                        <div class="move"><a href="">查看更多</a></div>
+                        <div class="move"><router-link to="/admin">查看更多</router-link></div>
                   </div>
             </div>
             <div style="clear:both;"></div>
