@@ -1,5 +1,6 @@
 <script setup>
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
+import { useRoute } from 'vue-router'
 import CommonHeader from '@/components/common/CommonHeader.vue'
 import CommonSidebar from '@/components/common/CommonSidebar.vue'
 import CommonBreadcrumb from '@/components/common/CommonBreadcrumb.vue'
@@ -12,20 +13,38 @@ const searchTitle = ref('');
 const searchCategory = ref('');
 const searchStatus = ref('');
 const clickSearch = () =>{
-      alert(123);
+      const params = {
+            title: searchTitle.value,
+            categoryId: searchCategory.value,
+            status: searchStatus.value,
+      }
+      articleIndexApi(params);
 }
 
 //获取API接口
+const route = useRoute();
 const articleList = ref({});
-const indexPageApi = async() => {
+const articleIndexApi = async(params={}) => {
       //获取文章列表
       const getArticleList = await articleApi.getArticleList({
-            startPage: 1,
-            size: 1
+            page: params.page,
+            size: 1,
+            title: params.title,
+            categoryId: params.categoryId,
+            status: params.status
       });
       articleList.value = getArticleList.data;
 }
-indexPageApi();
+articleIndexApi();
+
+//监听路由参数
+watch(
+      () => route.query.page,
+      (newPage) => {
+            const page = parseInt(newPage) || 1;
+            articleIndexApi({page: page});
+      }
+);
 </script>
 
 <template>
@@ -96,7 +115,7 @@ indexPageApi();
                                     <tr v-if="!articleList.list || articleList.list.length == 0"><td align="center" colspan="6" class="table-no-data">正在加载数据...</td></tr>
                               </tbody>
                         </table>
-                        <div class="page">
+                        <div class="page" v-if="pageTotal(articleList.total, articleList.size)>1">
                               <ul>
                                     <li v-for="page in pageTotal(articleList.total, articleList.size)" 
                                           :key="page"
