@@ -6,18 +6,51 @@ import CommonHeader from '@/components/common/CommonHeader.vue'
 import CommonSidebar from '@/components/common/CommonSidebar.vue'
 import CommonBreadcrumb from '@/components/common/CommonBreadcrumb.vue'
 import CommonFooter from '@/components/common/CommonFooter.vue'
+import { formatCurrentDate } from '@/util/dateUtil'
+import router from '@/router'
+import { articleApi } from '@/api/articleApi'
+import { articleCategoryApi } from '@/api/articleCategoryApi'
 
 const title = ref('');
-const category = ref('');
+const categoryId = ref('');
 const status = ref('');
-const sort = ref(0);
+const sortOrder = ref(0);
 const content = ref('');
 const editor = ref(useCKEditor.editor);
 const config = ref(null);
 onMounted(() =>{
       // 加载CKEditor配置
       config.value = useCKEditor.config();
-})
+});
+
+//提交表单
+const saveArticle = async() => {
+      try{
+            const formData = {
+                  title: title.value,
+                  categoryId: categoryId.value,
+                  status: status.value,
+                  sortOrder: sortOrder.value,
+                  content: content.value,
+            }
+            await articleApi.addArticle(formData);
+            router.push('/article');
+      }catch(error){
+            if(error.response.status == 500){
+                  alert("提交失败！");
+            }
+      }
+};
+
+//获取API接口
+const articleCategoryList = ref({});
+//文章分类接口
+const articleCategoryIndexApi = async() => {
+      const getArticleCategoryList = await articleCategoryApi.getArticleCategoryList();
+      articleCategoryList.value = getArticleCategoryList.data;
+}
+//加载接口
+articleCategoryIndexApi();
 </script>
 
 <template>
@@ -27,7 +60,7 @@ onMounted(() =>{
       <div class="content">
             <CommonBreadcrumb />
             <div class="operation-bar">
-                  <router-link to="/" class="info-msg"><font-awesome-icon icon="fa-solid fa-floppy-disk" /></router-link>
+                  <router-link to="#" class="info-msg" @click.prevent="saveArticle"><font-awesome-icon icon="fa-solid fa-floppy-disk" /></router-link>
             </div>
             <div style="clear:both;"></div>
             <div class="content-box">
@@ -37,7 +70,7 @@ onMounted(() =>{
                               <el-row>
                                     <el-col :span="8">
                                           <el-form-item label="发布时间">
-                                                <el-input disabled value="2025-08-14"/>
+                                                <el-input disabled :value="formatCurrentDate()"/>
                                           </el-form-item>
                                     </el-col>
                                     <el-col :span="8">
@@ -58,10 +91,11 @@ onMounted(() =>{
                                     <el-input v-model="title"/>
                               </el-form-item>
                               <el-form-item label="文章分类" label-position="right">
-                                    <el-select v-model="category" placeholder="文章分类">
-                                          <el-option value="1" label="文章分类1"/>
-                                          <el-option value="2" label="文章分类2"/>
-                                          <el-option value="3" label="文章分类3"/>
+                                    <el-select v-model="categoryId" placeholder="文章分类">
+                                          <el-option v-for="articleCategory in articleCategoryList.list"
+                                                :key="articleCategory.id" 
+                                                :value="articleCategory.id" 
+                                                :label="articleCategory.name"/>
                                     </el-select>
                               </el-form-item>
                               <el-form-item label="状态" label-position="right">
@@ -71,7 +105,7 @@ onMounted(() =>{
                                     </el-select>
                               </el-form-item>
                               <el-form-item label="排序" label-position="right">
-                                    <el-input-number v-model="sort" :min="0" :max="999"/>
+                                    <el-input-number v-model="sortOrder" :min="0" :max="999"/>
                               </el-form-item>
                               <el-form-item label="内容" label-position="right">
                                     <ckeditor 

@@ -4,10 +4,10 @@ import CommonHeader from '@/components/common/CommonHeader.vue'
 import CommonSidebar from '@/components/common/CommonSidebar.vue'
 import CommonBreadcrumb from '@/components/common/CommonBreadcrumb.vue'
 import CommonFooter from '@/components/common/CommonFooter.vue'
-import { articleApi } from '@/api/articleApi'
-import { articleCategoryApi } from '@/api/articleCategoryApi'
 import { formatDate } from '@/util/dateUtil'
 import { pageTotal } from '@/util/pageTotal'
+import { articleApi } from '@/api/articleApi'
+import { articleCategoryApi } from '@/api/articleCategoryApi'
 
 //搜索
 const searchTitle = ref('');
@@ -47,12 +47,16 @@ const deleteArticle = async() => {
             alert("请选择要删除的文章！");
             return;
       }
-      console.log(777);
-      console.log(selectArticleId.value);
       if(confirm("确定要删除选中的文章吗？")){
-            await articleApi.deleteArticle({id: selectArticleId});
-            selectArticleId.value = [];
-            articleIndexApi();
+            try{
+                  await articleApi.deleteArticle({
+                        id: selectArticleId.value
+                  });
+            }catch(error){
+                  if(error.response.status == 500){
+                        alert("删除失败！");
+                  }
+            }
       }
 }
 
@@ -74,6 +78,7 @@ const articleCategoryIndexApi = async() => {
       const getArticleCategoryList = await articleCategoryApi.getArticleCategoryList();
       articleCategoryList.value = getArticleCategoryList.data;
 }
+//加载接口
 articleIndexApi();
 articleCategoryIndexApi();
 </script>
@@ -85,7 +90,7 @@ articleCategoryIndexApi();
       <div class="content">
             <CommonBreadcrumb />
             <div class="operation-bar">
-                  <router-link to="/" class="info-msg"><font-awesome-icon icon="fa-solid fa-plus" /></router-link>
+                  <router-link to="/article/add" class="info-msg"><font-awesome-icon icon="fa-solid fa-plus" /></router-link>
                   <router-link to="#" class="danger-msg" @click.prevent="deleteArticle"><font-awesome-icon icon="fa-solid fa-trash-can" /></router-link>
             </div>
             <div style="clear:both;"></div>
