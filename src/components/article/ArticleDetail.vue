@@ -1,13 +1,14 @@
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, computed } from 'vue'
 import { Ckeditor } from '@ckeditor/ckeditor5-vue'
 import useCKEditor from '@/assets/js/useCKEditor.js'
 import CommonHeader from '@/components/common/CommonHeader.vue'
 import CommonSidebar from '@/components/common/CommonSidebar.vue'
 import CommonBreadcrumb from '@/components/common/CommonBreadcrumb.vue'
 import CommonFooter from '@/components/common/CommonFooter.vue'
-import { formatCurrentDate } from '@/util/dateUtil'
 import router from '@/router'
+import { useRoute } from 'vue-router'
+import { formatCurrentDate } from '@/util/dateUtil'
 import { articleApi } from '@/api/articleApi'
 import { articleCategoryApi } from '@/api/articleCategoryApi'
 
@@ -18,10 +19,10 @@ const sortOrder = ref(0);
 const content = ref('');
 const editor = ref(useCKEditor.editor);
 const config = ref(null);
-onMounted(() =>{
-      // 加载CKEditor配置
-      config.value = useCKEditor.config();
-});
+
+//判断提交属性
+const route = useRoute();
+const routeValue = computed(() => route.params.id);
 
 //提交表单
 const saveArticle = async() => {
@@ -33,8 +34,13 @@ const saveArticle = async() => {
                   sortOrder: sortOrder.value,
                   content: content.value,
             }
-            await articleApi.addArticle(formData);
-            router.push('/article');
+            if(routeValue.value == 'add'){
+                  await articleApi.addArticle(formData);
+                  router.push('/article');
+            }else{
+                  await articleApi.editArticle(formData);
+                  location.reload();
+            }
       }catch(error){
             if(error.response.status == 500){
                   alert("提交失败！");
@@ -43,14 +49,35 @@ const saveArticle = async() => {
 };
 
 //获取API接口
+const articleDetail = ref({});
 const articleCategoryList = ref({});
+//文章接口
+const articleIndexApi = async() => {
+      const getArticleDetail = await articleApi.getArticleDetail({
+            articleId: routeValue.value,
+      });
+      articleDetail.value = getArticleDetail.data;
+      title.value = articleDetail.value.title || '';
+      categoryId.value = articleDetail.value.categoryId || '';
+      status.value = articleDetail.value.status || '';
+      sortOrder.value = articleDetail.value.sortOrder || 0;
+      content.value = articleDetail.value.content || '';
+}
 //文章分类接口
 const articleCategoryIndexApi = async() => {
       const getArticleCategoryList = await articleCategoryApi.getArticleCategoryList();
       articleCategoryList.value = getArticleCategoryList.data;
 }
-//加载接口
-articleCategoryIndexApi();
+
+//组件加载完成后再加载接口
+onMounted(() =>{
+      // 加载CKEditor配置
+      config.value = useCKEditor.config();
+
+      //加载接口
+      articleIndexApi();
+      articleCategoryIndexApi();
+});
 </script>
 
 <template>
