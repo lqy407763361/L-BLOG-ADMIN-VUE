@@ -8,7 +8,7 @@ import CommonBreadcrumb from '@/components/common/CommonBreadcrumb.vue'
 import CommonFooter from '@/components/common/CommonFooter.vue'
 import router from '@/router'
 import { useRoute } from 'vue-router'
-import { formatCurrentDate } from '@/util/dateUtil'
+import { formatCurrentDate, formatDate, getCurrentTimestamp } from '@/util/dateUtil'
 import { articleApi } from '@/api/articleApi'
 import { articleCategoryApi } from '@/api/articleCategoryApi'
 
@@ -36,9 +36,13 @@ const saveArticle = async() => {
             }
             if(routeValue.value == 'add'){
                   await articleApi.addArticle(formData);
+                  alert("提交成功！");
                   router.push('/article');
             }else{
+                  formData.id = routeValue.value;
+                  formData.editTime = getCurrentTimestamp();
                   await articleApi.editArticle(formData);
+                  alert("提交成功！");
                   location.reload();
             }
       }catch(error){
@@ -102,12 +106,12 @@ onMounted(() =>{
                                     </el-col>
                                     <el-col :span="8">
                                           <el-form-item label="最后编辑">
-                                                <el-input disabled value="2025-08-14"/>
+                                                <el-input disabled :value="articleDetail.editTime ? formatDate(articleDetail.editTime) : ''"/>
                                           </el-form-item>
                                     </el-col>
                                     <el-col :span="8">
                                           <el-form-item label="阅读量">
-                                                <el-input disabled value="77"/>
+                                                <el-input disabled :value="articleDetail.readCount ? articleDetail.readCount : 0"/>
                                           </el-form-item>
                                     </el-col>
                               </el-row>
