@@ -20,7 +20,7 @@ const content = ref('');
 const editor = ref(useCKEditor.editor);
 const config = ref(null);
 
-//判断提交属性
+//判断提交属性为新增还是编辑
 const route = useRoute();
 const routeValue = computed(() => route.params.id);
 
@@ -57,6 +57,10 @@ const articleDetail = ref({});
 const articleCategoryList = ref({});
 //文章接口
 const articleIndexApi = async() => {
+      if(routeValue.value == 'add'){
+            return;
+      }
+      
       const getArticleDetail = await articleApi.getArticleDetail({
             articleId: routeValue.value,
       });
@@ -131,8 +135,8 @@ onMounted(() =>{
                               </el-form-item>
                               <el-form-item label="状态" label-position="right">
                                     <el-select v-model="status" placeholder="状态">
-                                          <el-option value="1" label="启用"/>
-                                          <el-option value="2" label="禁用"/>
+                                          <el-option :value="1" label="启用"/>
+                                          <el-option :value="2" label="禁用"/>
                                     </el-select>
                               </el-form-item>
                               <el-form-item label="排序" label-position="right">

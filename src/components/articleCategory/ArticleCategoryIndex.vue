@@ -124,7 +124,7 @@ articleCategoryIndexApi();
                                           <td align="left">{{ articleCategory.name }}</td>
                                           <td align="left"><span v-if="articleCategory.status == 1" style="color:green;">启用</span><span v-else style="color:red;">禁用</span></td>
                                           <td align="left">{{ formatDate(articleCategory.addTime) }}</td>
-                                          <td align="right"><router-link :to="`/articleCategory/{articleCategory.id}`"><font-awesome-icon icon="fa-solid fa-pen-to-square" /></router-link></td>
+                                          <td align="right"><router-link :to="`/articleCategory/${articleCategory.id}`"><font-awesome-icon icon="fa-solid fa-pen-to-square" /></router-link></td>
                                     </tr>
                                     <tr v-if="!articleCategoryList.list || articleCategoryList.list.length == 0"><td align="center" colspan="6" class="table-no-data">暂无数据...</td></tr>
                               </tbody>
