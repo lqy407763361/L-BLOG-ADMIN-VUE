@@ -52,6 +52,7 @@ const deleteArticle = async() => {
                   await articleApi.deleteArticle({
                         id: selectArticleId.value
                   });
+                  window.location.reload();
             }catch(error){
                   if(error.response.status == 500){
                         alert("删除失败！");

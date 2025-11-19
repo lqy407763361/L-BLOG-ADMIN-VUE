@@ -49,6 +49,7 @@ const deleteArticleCategory = async() => {
                   await articleCategoryApi.deleteArticleCategory({
                         id: selectArticleCategoryId.value
                   });
+                  window.location.reload();
             }catch(error){
                   if(error.response.status == 500){
                         alert("删除失败！");

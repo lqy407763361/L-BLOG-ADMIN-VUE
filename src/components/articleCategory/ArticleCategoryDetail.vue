@@ -6,7 +6,7 @@ import CommonBreadcrumb from '@/components/common/CommonBreadcrumb.vue'
 import CommonFooter from '@/components/common/CommonFooter.vue'
 import router from '@/router'
 import { useRoute } from 'vue-router'
-import { formatCurrentDate, formatDate, getCurrentTimestamp } from '@/util/dateUtil'
+import { formatCurrentDate, formatDate } from '@/util/dateUtil'
 import { articleCategoryApi } from '@/api/articleCategoryApi'
 
 const name = ref('');
@@ -33,7 +33,6 @@ const saveArticleCategory = async() => {
                   router.push('/articleCategory');
             }else{
                   formData.id = routeValue.value;
-                  formData.editTime = getCurrentTimestamp();
                   await articleCategoryApi.editArticleCategory(formData);
                   alert("提交成功！");
                   location.reload();

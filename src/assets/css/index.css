@@ -69,8 +69,8 @@ header{width:100%;border-bottom:1px solid #e5e5e5;position:fixed;background:#fff
 		li{font-size:1.4rem;cursor:pointer;
 			a,.sl-name{color:#C4C4C4;padding:10px;border-bottom:1px solid #585858;display:flex;align-items:center;}
 			span{margin-left:10px;}
-			svg:first-child{color:#fff;width:1.6rem;height:1.6rem;margin-left:10px;}
-			svg:last-child{color:#fff;width:1.2rem;height:1.2rem;margin-left:auto;}
+			svg:first-child{color:#C4C4C4;width:1.6rem;height:1.6rem;margin-left:10px;}
+			svg:last-child{color:#C4C4C4;width:1.2rem;height:1.2rem;margin-left:auto;}
 			.rotate{transition:transform 0.3s ease;transform:rotate(90deg);}
 			.sidebar-enter-active,.sidebar-leave-active{transition:all 0.3s ease;max-height:200px;overflow:hidden;}
 			.sidebar-enter-from,.sidebar-leave-to{max-height:0;opacity:0;transform:translateY(-10px);}
