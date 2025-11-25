@@ -7,7 +7,7 @@ ul{list-style:none;padding:0px;margin-top:0px;}
 .not-found{font-size:2.2rem;margin-left:30px;}
 @keyframes run{from{margin-left:10px;}to{margin-left:20px;}}
 .default-msg,.info-msg,.warning-msg,.danger-msg{padding:9px 12px;border-radius:3px;display:inline-block;cursor:pointer;}
-.default-msg{background:#fff;color:#333;
+.default-msg{background:#fcfcfc;color:#333;border:1px solid #e8e8e8;
 	&:hover{background:#ecf5ff;}
 }
 .info-msg{background:#409eff;color:#fff;

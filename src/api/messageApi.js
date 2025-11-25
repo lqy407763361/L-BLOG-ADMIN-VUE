@@ -1,6 +1,11 @@
 import httpRequest from "@/axios/axiosConfig";
 
 export const messageApi = {
+    //编辑单页
+    async editMessage(params = {}){
+        return await httpRequest.post('/editMessage', params);
+    },
+
     //删除消息
     async deleteMessage(id = {}){
         return await httpRequest.delete('/deleteMessage', {data: id});

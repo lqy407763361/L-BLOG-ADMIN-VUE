@@ -36,7 +36,6 @@ const aboutDetail = ref({});
 //文章接口
 const aboutIndexApi = async() => {
       const getAboutDetail = await aboutApi.getAboutDetail();
-      console.log(getAboutDetail);
       aboutDetail.value = getAboutDetail.data;
       status.value = aboutDetail.value.status || '';
       content.value = aboutDetail.value.content || '';
