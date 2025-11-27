@@ -104,7 +104,7 @@ onMounted(() =>{
                               <el-row>
                                     <el-col :span="8">
                                           <el-form-item label="发布时间">
-                                                <el-input disabled :value="formatCurrentDate()"/>
+                                                <el-input disabled :value="articleDetail.addTime ? formatDate(articleDetail.addTime) : formatCurrentDate()"/>
                                           </el-form-item>
                                     </el-col>
                                     <el-col :span="8">

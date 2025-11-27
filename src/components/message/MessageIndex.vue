@@ -32,7 +32,7 @@ const changePage = (page) => {
             isRead: searchParams.value.isRead,
       }
       messageIndexApi(params);
-}
+} 
 
 //全选
 const selectMessageId = ref([]);

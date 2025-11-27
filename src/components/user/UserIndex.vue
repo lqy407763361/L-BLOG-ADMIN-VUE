@@ -4,12 +4,72 @@ import CommonHeader from '@/components/common/CommonHeader.vue'
 import CommonSidebar from '@/components/common/CommonSidebar.vue'
 import CommonBreadcrumb from '@/components/common/CommonBreadcrumb.vue'
 import CommonFooter from '@/components/common/CommonFooter.vue'
+import { formatDate } from '@/util/dateUtil'
+import { pageTotal } from '@/util/pageTotal'
+import { userApi } from '@/api/userApi'
 
+//搜索
 const searchName = ref('');
 const searchStatus = ref('');
-const clickSearch = () =>{
-      alert(123);
+const searchParams = ref({});
+const clickSearch = () => {
+      const params = {
+            name: searchName.value,
+            status: searchStatus.value,
+      }
+      searchParams.value = params;
+      userIndexApi(params);
 }
+
+//分页
+const changePage = (page) => {
+      const params = {
+            page: page,
+            name: searchParams.value.name,
+            status: searchParams.value.status,
+      }
+      userIndexApi(params);
+}
+
+//全选
+const selectUserId = ref([]);
+const checkAll = (e) => {
+      selectUserId.value = e.target.checked ? userList.value.list.map(item => item.id) : [];
+}
+
+//删除用户
+const deleteUser = async() => {
+      if(selectUserId.value.length == 0){
+            alert("请选择要删除的用户！");
+            return;
+      }
+      if(confirm("确定要删除选中的用户吗？")){
+            try{
+                  await userApi.deleteUser({
+                        id: selectUserId.value
+                  });
+                  window.location.reload();
+            }catch(error){
+                  if(error.response.status == 500){
+                        alert("删除失败！");
+                  }
+            }
+      }
+}
+
+//获取API接口
+const userList = ref({});
+//文章接口
+const userIndexApi = async(params={}) => {
+      const getUserList = await userApi.getUserList({
+            page: params.page,
+            name: params.name,
+            status: params.status
+      });
+      userList.value = getUserList.data;
+}
+//加载接口
+userIndexApi();
 </script>
 
 <template>
@@ -19,8 +79,7 @@ const clickSearch = () =>{
       <div class="content">
             <CommonBreadcrumb />
             <div class="operation-bar">
-                  <router-link to="/" class="info-msg"><font-awesome-icon icon="fa-solid fa-plus" /></router-link>
-                  <router-link to="#" class="danger-msg"><font-awesome-icon icon="fa-solid fa-trash-can" /></router-link>
+                  <router-link to="#" class="danger-msg" @click.prevent="deleteUser"><font-awesome-icon icon="fa-solid fa-trash-can" /></router-link>
             </div>
             <div style="clear:both;"></div>
             <div class="content-box">
@@ -50,7 +109,7 @@ const clickSearch = () =>{
                         <table class="table table-bordered table-hover">
                               <thead>
                                     <tr>
-                                          <td align="center"><input type="checkbox" name="check_all"></td>
+                                          <td align="center"><input type="checkbox" @change="checkAll"></td>
                                           <td align="left"><span>会员账号</span></td>
                                           <td align="left"><span>状态</span>&nbsp;&nbsp;<font-awesome-icon icon="fa-solid fa-caret-up" /></td>
                                           <td align="left"><span>注册时间</span>&nbsp;&nbsp;<font-awesome-icon icon="fa-solid fa-caret-up" /></td>
@@ -59,30 +118,26 @@ const clickSearch = () =>{
                                     </tr>
                               </thead>
                               <tbody>
-                                    <tr>
-                                          <td align="center"><input type="checkbox" name="check_one[]" value=""></td>
-                                          <td align="left">会员账号1</td>
-                                          <td align="left"><span style="color:green;">启用</span></td>
-                                          <td align="left">2025-08-11</td>
-                                          <td align="left">2025-08-11</td>
-                                          <td align="right"><router-link to="/user/1"><font-awesome-icon icon="fa-solid fa-pen-to-square" /></router-link></td>
+                                    <tr v-for="user in userList.list" 
+                                          :key="user.id">
+                                          <td align="center"><input type="checkbox" :value="user.id" v-model="selectUserId"></td>
+                                          <td align="left">{{ user.name }}</td>
+                                          <td align="left"><span v-if="user.status == 1" style="color:green;">启用</span><span v-else style="color:red;">禁用</span></td>
+                                          <td align="left">{{ formatDate(user.addTime) }}</td>
+                                          <td align="left">{{ formatDate(user.visitTime) }}</td>
+                                          <td align="right"><router-link :to="`/user/${ user.id }`"><font-awesome-icon icon="fa-solid fa-pen-to-square" /></router-link></td>
                                     </tr>
-                                    <tr>
-                                          <td align="center"><input type="checkbox" name="check_one[]" value=""></td>
-                                          <td align="left">会员账号2</td>
-                                          <td align="left"><span style="color:red;">禁用</span></td>
-                                          <td align="left">2025-08-11</td>
-                                          <td align="left">2025-08-11</td>
-                                          <td align="right"><router-link to=""><font-awesome-icon icon="fa-solid fa-pen-to-square" /></router-link></td>
-                                    </tr>
-                                    <tr><td align="center" colspan="6" class="table-no-data">正在加载数据...</td></tr>
+                                    <tr v-if="!userList.list || userList.list.length == 0"><td align="center" colspan="6" class="table-no-data">暂无数据...</td></tr>
                               </tbody>
                         </table>
-                        <div class="page">
+                        <div class="page" v-if="pageTotal(userList.total, userList.size)>1">
                               <ul>
-                                    <li class="active"><span>1</span></li>
-                                    <li><router-link to="">2</router-link></li>
-                                    <li><router-link to="">3</router-link></li>
+                                    <li v-for="page in pageTotal(userList.total, userList.size)" 
+                                          :key="page"
+                                          :class="{active: page==userList.startPage}">
+                                          <span v-if="page==userList.startPage">{{ page }}</span>
+                                          <router-link v-else :to="{path: '/user', query:{page: page}}" @click.prevent="changePage(page)">{{ page }}</router-link>
+                                    </li>
                               </ul>
                         </div>
                         <div style="clear:both;"></div>

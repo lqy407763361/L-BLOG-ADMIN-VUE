@@ -1,7 +1,7 @@
 import httpRequest from "@/axios/axiosConfig";
 
 export const messageApi = {
-    //编辑单页
+    //编辑消息
     async editMessage(params = {}){
         return await httpRequest.post('/editMessage', params);
     },

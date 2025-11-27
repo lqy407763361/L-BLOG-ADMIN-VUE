@@ -14,16 +14,20 @@ const routeValue = computed(() => route.params.id);
 
 //获取API接口
 const messageDetail = ref({});
-//文章接口
+//消息接口
 const messageIndexApi = async() => {
       if(routeValue.value < 1){
             return;
       }
 
+      //读取消息详情
       const getMessageDetail = await messageApi.getMessageDetail({
             messageId: routeValue.value,
       });
       messageDetail.value = getMessageDetail.data;
+
+      //编辑消息状态
+      await messageApi.editMessage({id: routeValue.value});
 }
 
 //加载接口
