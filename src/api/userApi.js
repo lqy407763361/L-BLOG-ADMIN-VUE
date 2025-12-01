@@ -2,8 +2,8 @@ import httpRequest from "@/axios/axiosConfig";
 
 export const userApi = {
     //编辑用户
-    async editUser(params = {}){
-        return await httpRequest.post('/editUser', params);
+    async editUserByAdmin(params = {}){
+        return await httpRequest.post('/editUserByAdmin', params);
     },
 
     //删除用户

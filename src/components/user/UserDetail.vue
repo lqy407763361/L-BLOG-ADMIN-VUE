@@ -29,11 +29,10 @@ const routeValue = computed(() => route.params.id);
 const saveUser = async() => {
       try{
             const formData = {
-                  userId: routeValue.value,
+                  id: routeValue.value,
                   status: status.value,
             }
-            formData.id = routeValue.value;
-            await userApi.editUser(formData);
+            await userApi.editUserByAdmin(formData);
             alert("提交成功！");
             location.reload();
       }catch(error){
@@ -101,8 +100,8 @@ userIndexApi();
                               </el-form-item>
                               <el-form-item label="状态" label-position="right">
                                     <el-select v-model="status" placeholder="状态">
-                                          <el-option value="1" label="启用"/>
-                                          <el-option value="2" label="禁用"/>
+                                          <el-option :value="1" label="启用"/>
+                                          <el-option :value="2" label="禁用"/>
                                     </el-select>
                               </el-form-item>
                               <el-form-item label="注册方式" label-position="right">
