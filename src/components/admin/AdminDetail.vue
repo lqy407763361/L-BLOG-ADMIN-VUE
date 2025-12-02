@@ -1,17 +1,84 @@
 <script setup>
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 import CommonHeader from '@/components/common/CommonHeader.vue'
 import CommonSidebar from '@/components/common/CommonSidebar.vue'
 import CommonBreadcrumb from '@/components/common/CommonBreadcrumb.vue'
 import CommonFooter from '@/components/common/CommonFooter.vue'
+import router from '@/router'
+import { useRoute } from 'vue-router'
+import { formatCurrentDate, formatDate } from '@/util/dateUtil'
+import { adminApi } from '@/api/adminApi'
+import { adminGroupApi } from '@/api/adminGroupApi'
 
 const account = ref('');
 const name = ref('');
 const password = ref('');
 const confirmPassword = ref('');
 const status = ref('');
-const adminGroupId = ref('');
+const groupId = ref('');
 const description = ref('');
+
+//判断提交属性为新增还是编辑
+const route = useRoute();
+const routeValue = computed(() => route.params.id);
+
+//提交表单
+const saveAdmin = async() => {
+      try{
+            const formData = {
+                  account: account.value,
+                  name: name.value,
+                  password: password.value,
+                  status: status.value,
+                  groupId: groupId.value,
+                  description: description.value,
+            }
+            if(routeValue.value == 'add'){
+                  await adminApi.addAdmin(formData);
+                  alert("提交成功！");
+                  router.push('/admin');
+            }else{
+                  formData.id = routeValue.value;
+                  await adminApi.editAdminByAdmin(formData);
+                  alert("提交成功！");
+                  location.reload();
+            }
+      }catch(error){
+            if(error.response.status == 500){
+                  alert("提交失败！");
+            }
+      }
+};
+
+//获取API接口
+const adminDetail = ref({});
+const adminGroupList = ref({});
+//管理员接口
+const adminIndexApi = async() => {
+      if(routeValue.value == 'add'){
+            return;
+      }
+      
+      const getAdminDetail = await adminApi.getAdminDetailByAdmin({
+            adminId: routeValue.value,
+      });
+      adminDetail.value = getAdminDetail.data;
+      account.value = adminDetail.value.account || '';
+      name.value = adminDetail.value.name || '';
+      password.value = adminDetail.value.password || '';
+      status.value = adminDetail.value.status || '';
+      groupId.value = adminDetail.value.groupId || '';
+      description.value = adminDetail.value.description || '';
+}
+//管理员群组接口
+const adminGroupIndexApi = async() => {
+      const getAdminGroupList = await adminGroupApi.getAdminGroupList();
+      adminGroupList.value = getAdminGroupList.data;
+}
+
+//加载接口
+adminIndexApi();
+adminGroupIndexApi();
 </script>
 
 <template>
@@ -21,7 +88,7 @@ const description = ref('');
       <div class="content">
             <CommonBreadcrumb />
             <div class="operation-bar">
-                  <router-link to="/" class="info-msg"><font-awesome-icon icon="fa-solid fa-floppy-disk" /></router-link>
+                  <router-link to="#" class="info-msg" @click.prevent="saveAdmin"><font-awesome-icon icon="fa-solid fa-floppy-disk" /></router-link>
             </div>
             <div style="clear:both;"></div>
             <div class="content-box">
@@ -31,17 +98,17 @@ const description = ref('');
                               <el-row>
                                     <el-col :span="8">
                                           <el-form-item label="添加时间">
-                                                <el-input disabled value="2025-08-14"/>
+                                                <el-input disabled :value="adminDetail.addTime ? formatDate(adminDetail.addTime) : formatCurrentDate()"/>
                                           </el-form-item>
                                     </el-col>
                                     <el-col :span="8">
                                           <el-form-item label="最后编辑时间">
-                                                <el-input disabled value="2025-08-14"/>
+                                                <el-input disabled :value="adminDetail.editTime ? formatDate(adminDetail.editTime) : ''"/>
                                           </el-form-item>
                                     </el-col>
                                     <el-col :span="8">
                                           <el-form-item label="最后登录时间">
-                                                <el-input disabled value="2025-08-14"/>
+                                                <el-input disabled :value="adminDetail.lastLoginTime ? formatDate(adminDetail.lastLoginTime) : ''"/>
                                           </el-form-item>
                                     </el-col>
                               </el-row>
@@ -62,14 +129,16 @@ const description = ref('');
                               </el-form-item>
                               <el-form-item label="状态" label-position="right">
                                     <el-select v-model="status" placeholder="状态">
-                                          <el-option value="1" label="启用"/>
-                                          <el-option value="2" label="禁用"/>
+                                          <el-option :value="1" label="启用"/>
+                                          <el-option :value="2" label="禁用"/>
                                     </el-select>
                               </el-form-item>
                               <el-form-item label="所属群组" label-position="right">
-                                    <el-select v-model="adminGroupId" placeholder="所属群组">
-                                          <el-option value="1" label="所属群组1"/>
-                                          <el-option value="2" label="所属群组2"/>
+                                    <el-select v-model="groupId" placeholder="管理员群组">
+                                          <el-option v-for="adminGroup in adminGroupList.list"
+                                                :key="adminGroup.id" 
+                                                :value="adminGroup.id" 
+                                                :label="adminGroup.name"/>
                                     </el-select>
                               </el-form-item>
                               <el-form-item label="简介" label-position="right">
