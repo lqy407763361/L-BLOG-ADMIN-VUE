@@ -1,4 +1,4 @@
-import httpRequest from "@/axios/axiosConfig";
+import httpRequest from "@/config/axiosConfig";
 
 export const adminGroupApi = {
     //添加管理员群组
@@ -22,8 +22,8 @@ export const adminGroupApi = {
     },
 
     //获取管理员群组详情
-    async getAdminGroupDetail(){
-        return await httpRequest.get('/getAdminGroupDetail');
+    async getAdminGroupDetail(adminGroupId){
+        return await httpRequest.get('/getAdminGroupDetail', {params: adminGroupId});
     },
 
     //获取管理员群组数量

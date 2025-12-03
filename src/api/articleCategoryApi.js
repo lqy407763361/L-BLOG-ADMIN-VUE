@@ -1,4 +1,4 @@
-import httpRequest from "@/axios/axiosConfig";
+import httpRequest from "@/config/axiosConfig";
 
 export const articleCategoryApi = {
     //添加文章

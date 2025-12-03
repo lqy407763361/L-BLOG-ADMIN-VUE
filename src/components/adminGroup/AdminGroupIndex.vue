@@ -4,12 +4,73 @@ import CommonHeader from '@/components/common/CommonHeader.vue'
 import CommonSidebar from '@/components/common/CommonSidebar.vue'
 import CommonBreadcrumb from '@/components/common/CommonBreadcrumb.vue'
 import CommonFooter from '@/components/common/CommonFooter.vue'
+import { formatDate } from '@/util/dateUtil'
+import { pageTotal } from '@/util/pageTotal'
+import { adminGroupApi } from '@/api/adminGroupApi'
 
-const searchTitle = ref('');
+//搜索
+const searchName = ref('');
 const searchStatus = ref('');
+const searchParams = ref({});
 const clickSearch = () =>{
-      alert(123);
+      const params = {
+            name: searchName.value,
+            status: searchStatus.value,
+      }
+      searchParams.value = params;
+      adminGroupIndexApi(params);
 }
+
+//分页
+const changePage = (page) => {
+      const params = {
+            page: page,
+            name: searchParams.value.name,
+            groupId: searchParams.value.groupId,
+            status: searchParams.value.status,
+      }
+      adminGroupIndexApi(params);
+}
+
+//全选
+const selectAdminGroupId = ref([]);
+const checkAll = (e) => {
+      selectAdminGroupId.value = e.target.checked ? adminGroupList.value.list.map(item => item.id) : [];
+}
+
+//删除文章
+const deleteAdminGroup = async() => {
+      if(selectAdminGroupId.value.length == 0){
+            alert("请选择要删除的管理员群组！");
+            return;
+      }
+      if(confirm("确定要删除选中的管理员群组吗？")){
+            try{
+                  await adminGroupApi.deleteAdminGroup({
+                        id: selectAdminGroupId.value
+                  });
+                  window.location.reload();
+            }catch(error){
+                  if(error.response.status == 500){
+                        alert("删除失败！");
+                  }
+            }
+      }
+}
+
+//获取API接口
+const adminGroupList = ref({});
+//管理员群组接口
+const adminGroupIndexApi = async(params={}) => {
+      const getAdminGroupList = await adminGroupApi.getAdminGroupList({
+            page: params.page,
+            name: params.name,
+            status: params.status
+      });
+      adminGroupList.value = getAdminGroupList.data;
+}
+//加载接口
+adminGroupIndexApi();
 </script>
 
 <template>
@@ -19,8 +80,8 @@ const clickSearch = () =>{
       <div class="content">
             <CommonBreadcrumb />
             <div class="operation-bar">
-                  <router-link to="/" class="info-msg"><font-awesome-icon icon="fa-solid fa-plus" /></router-link>
-                  <router-link to="#" class="danger-msg"><font-awesome-icon icon="fa-solid fa-trash-can" /></router-link>
+                  <router-link to="/adminGroup/add" class="info-msg"><font-awesome-icon icon="fa-solid fa-plus" /></router-link>
+                  <router-link to="#" class="danger-msg" @click.prevent="deleteAdminGroup"><font-awesome-icon icon="fa-solid fa-trash-can" /></router-link>
             </div>
             <div style="clear:both;"></div>
             <div class="content-box">
@@ -31,7 +92,7 @@ const clickSearch = () =>{
                                     <el-row>
                                           <el-col :span="8">
                                                 <el-form-item label="群组名称">
-                                                      <el-input v-model="searchTitle" maxlength="20" show-word-limit="true" placeholder="群组名称"/>
+                                                      <el-input v-model="searchName" maxlength="20" show-word-limit="true" placeholder="群组名称"/>
                                                 </el-form-item>
                                           </el-col>
                                           <el-col :span="8">
@@ -50,7 +111,7 @@ const clickSearch = () =>{
                         <table class="table table-bordered table-hover">
                               <thead>
                                     <tr>
-                                          <td align="center"><input type="checkbox" name="check_all"></td>
+                                          <td align="center"><input type="checkbox" @change="checkAll"></td>
                                           <td align="left"><span>群组名称</span></td>
                                           <td align="left"><span>状态</span>&nbsp;&nbsp;<font-awesome-icon icon="fa-solid fa-caret-up" /></td>
                                           <td align="left"><span>创建时间</span>&nbsp;&nbsp;<font-awesome-icon icon="fa-solid fa-caret-up" /></td>
@@ -58,28 +119,25 @@ const clickSearch = () =>{
                                     </tr>
                               </thead>
                               <tbody>
-                                    <tr>
-                                          <td align="center"><input type="checkbox" name="check_one[]" value=""></td>
-                                          <td align="left">群组名称1</td>
-                                          <td align="left"><span style="color:green;">启用</span></td>
-                                          <td align="left">2025-08-11</td>
-                                          <td align="right"><router-link to="/adminGroup/1"><font-awesome-icon icon="fa-solid fa-pen-to-square" /></router-link></td>
+                                    <tr v-for="adminGroup in adminGroupList.list"
+                                          :key="adminGroup.id">
+                                          <td align="center"><input type="checkbox" :value="adminGroup.id" v-model="selectAdminGroupId"></td>
+                                          <td align="left">{{ adminGroup.name }}</td>
+                                          <td align="left"><span v-if="adminGroup.status == 1" style="color:green;">启用</span><span v-else style="color:red;">禁用</span></td>
+                                          <td align="left">{{ formatDate(adminGroup.addTime) }}</td>
+                                          <td align="right"><router-link :to="`/adminGroup/${adminGroup.id}`"><font-awesome-icon icon="fa-solid fa-pen-to-square" /></router-link></td>
                                     </tr>
-                                    <tr>
-                                          <td align="center"><input type="checkbox" name="check_one[]" value=""></td>
-                                          <td align="left">群组名称2</td>
-                                          <td align="left"><span style="color:red;">禁用</span></td>
-                                          <td align="left">2025-08-11</td>
-                                          <td align="right"><router-link to=""><font-awesome-icon icon="fa-solid fa-pen-to-square" /></router-link></td>
-                                    </tr>
-                                    <tr><td align="center" colspan="6" class="table-no-data">正在加载数据...</td></tr>
+                                    <tr v-if="!adminGroupList.list || adminGroupList.list.length == 0"><td align="center" colspan="6" class="table-no-data">暂无数据...</td></tr>
                               </tbody>
                         </table>
-                        <div class="page">
+                        <div class="page" v-if="pageTotal(adminGroupList.total, adminGroupList.size)>1">
                               <ul>
-                                    <li class="active"><span>1</span></li>
-                                    <li><router-link to="">2</router-link></li>
-                                    <li><router-link to="">3</router-link></li>
+                                    <li v-for="page in pageTotal(adminGroupList.total, adminGroupList.size)"
+                                          :key="page"
+                                          :class="{active: page==adminGroupList.startPage}">
+                                          <span v-if="page==adminGroupList.startPage">{{ page }}</span>
+                                          <router-link v-else :to="{path: '/adminGroup', query:{page: page}}" @click.prevent="changePage(page)">{{ page }}</router-link>
+                                    </li>
                               </ul>
                         </div>
                         <div style="clear:both;"></div>

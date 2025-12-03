@@ -24,6 +24,26 @@ const routeValue = computed(() => route.params.id);
 
 //提交表单
 const saveAdmin = async() => {
+      if((password.value != "") || (confirmPassword.value != "")){
+            if(password.value != confirmPassword.value){
+                  alert("密码不一致！");
+                  return false;
+            } 
+      }
+      if(account.value == ""){
+            alert("账号不能为空！");
+            return false;
+      }
+      if(name.value == ""){
+            alert("名称不能为空！");
+            return false;
+      }
+      if(groupId.value == ""){
+            alert("管理员群组不能为空！");
+            return false;
+      }
+
+
       try{
             const formData = {
                   account: account.value,
@@ -34,6 +54,12 @@ const saveAdmin = async() => {
                   description: description.value,
             }
             if(routeValue.value == 'add'){
+                  //添加时密码必填
+                  if(password.value == ""){
+                        alert("密码不能为空！");
+                        return false;
+                  }
+
                   await adminApi.addAdmin(formData);
                   alert("提交成功！");
                   router.push('/admin');

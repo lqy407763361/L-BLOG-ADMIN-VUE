@@ -1,4 +1,4 @@
-import httpRequest from "@/axios/axiosConfig";
+import httpRequest from "@/config/axiosConfig";
 
 export const userApi = {
     //编辑用户

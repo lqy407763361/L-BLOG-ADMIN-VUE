@@ -1,4 +1,4 @@
-import httpRequest from "@/axios/axiosConfig";
+import httpRequest from "@/config/axiosConfig";
 
 export const dateRangeApi = {
     //获取最近一周的访问人次列表
