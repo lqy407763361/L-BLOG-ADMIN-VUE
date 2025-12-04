@@ -43,7 +43,7 @@ const aboutIndexApi = async() => {
 
 //组件加载完成后再加载接口
 onMounted(() =>{
-      // 加载CKEditor配置
+      //加载CKEditor配置
       config.value = useCKEditor.config();
 
       //加载接口

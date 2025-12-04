@@ -7,6 +7,7 @@ import CommonHeader from '@/components/common/CommonHeader.vue'
 import CommonSidebar from '@/components/common/CommonSidebar.vue'
 import CommonBreadcrumb from '@/components/common/CommonBreadcrumb.vue'
 import CommonFooter from '@/components/common/CommonFooter.vue'
+import { siteConfigApi } from '@/api/siteConfigApi'
 
 const formTab = ref('seo');
 const metaTitle = ref('');
@@ -16,21 +17,71 @@ const siteTitle = ref('');
 const siteListLimit = ref(1);
 const adminListLimit = ref(1);
 const imageUrl = ref('');
-const siteConfig = ref('');
-const systemMaintenance = ref('');
-const siteSessionExpire = ref('');
-const adminSessionExpire = ref('');
+const systemMaintenance = ref(1);
 const siteLoginMaxNumber = ref('');
 const adminLoginMaxNumber = ref('');
+const siteSessionExpire = ref('');
+const adminSessionExpire = ref('');
+const errorLog = ref('');
+const siteConfig = ref('');
 const editor = ref(useCKEditor.editor);
 const config = ref(null);
 
-// 上传图片
+//提交表单
+const saveSiteConfig = async() => {
+      try{
+            const formData = {
+                  metaTitle: metaTitle.value,
+                  metaDescription: metaDescription.value,
+                  metaKeywords: metaKeywords.value,
+                  siteTitle: siteTitle.value,
+                  siteListLimit: siteListLimit.value,
+                  adminListLimit: adminListLimit.value,
+                  siteConfig: siteConfig.value,
+                  systemMaintenance: systemMaintenance.value,
+                  siteLoginMaxNumber: siteLoginMaxNumber.value,
+                  adminLoginMaxNumber: adminLoginMaxNumber.value,
+                  siteSessionExpire: siteSessionExpire.value,
+                  adminSessionExpire: adminSessionExpire.value,
+                  errorLog: errorLog.value,
+            }
+            await siteConfigApi.editSiteConfig(formData);
+            alert("提交成功！");
+            location.reload();
+      }catch(error){
+            if(error.response.status == 500){
+                  alert("提交失败！");
+            }
+      }
+};
+
+//获取API接口
+const siteConfigDetail = ref({});
+//配置接口
+const siteConfigIndexApi = async() => {
+      const getSiteConfigDetail = await siteConfigApi.getSiteConfigDetail();
+      siteConfigDetail.value = getSiteConfigDetail.data;
+      metaTitle.value = siteConfigDetail.value.metaTitle || '';
+      metaDescription.value = siteConfigDetail.value.metaDescription || '';
+      metaKeywords.value = siteConfigDetail.value.metaKeywords || '';
+      siteTitle.value = siteConfigDetail.value.siteTitle || '';
+      siteListLimit.value = siteConfigDetail.value.siteListLimit || '';
+      adminListLimit.value = siteConfigDetail.value.adminListLimit || '';
+      siteConfig.value = siteConfigDetail.value.siteConfig || '';
+      systemMaintenance.value = siteConfigDetail.value.systemMaintenance || '';
+      siteLoginMaxNumber.value = siteConfigDetail.value.siteLoginMaxNumber || '';
+      adminLoginMaxNumber.value = siteConfigDetail.value.adminLoginMaxNumber || '';
+      siteSessionExpire.value = siteConfigDetail.value.siteSessionExpire || '';
+      adminSessionExpire.value = siteConfigDetail.value.adminSessionExpire || '';
+      errorLog.value = siteConfigDetail.value.errorLog || '';
+}
+
+//上传图片
 const handleAvatarSuccess = (response, uploadFile) => {
       imageUrl.value = URL.createObjectURL(uploadFile.raw);
 };
 const beforeAvatarUpload = (rawFile) => {
-      if (rawFile.type !== 'image/jpeg') {
+      if(rawFile.type !== 'image/jpeg/png'){
             ElMessage.error('文件格式不符！')
             return false;
       }else if(rawFile.size / 1024 / 1024 > 2){
@@ -40,9 +91,13 @@ const beforeAvatarUpload = (rawFile) => {
       return true;
 }
 
+//组件加载完成后再加载接口
 onMounted(() =>{
-      // 加载CKEditor配置
+      //加载CKEditor配置
       config.value = useCKEditor.config();
+
+      //加载接口
+      siteConfigIndexApi();
 })
 </script>
 
@@ -53,7 +108,7 @@ onMounted(() =>{
       <div class="content">
             <CommonBreadcrumb />
             <div class="operation-bar">
-                  <router-link to="/" class="info-msg"><font-awesome-icon icon="fa-solid fa-floppy-disk" /></router-link>
+                  <router-link to="#" class="info-msg" @click.prevent="saveSiteConfig"><font-awesome-icon icon="fa-solid fa-floppy-disk" /></router-link>
             </div>
             <div style="clear:both;"></div>
             <div class="content-box">
@@ -82,9 +137,6 @@ onMounted(() =>{
                                           <el-form-item label="后台列表页展示数量" label-position="right">
                                                 <el-input v-model="adminListLimit"/>
                                           </el-form-item>
-                                          <el-form-item label="后台列表页展示数量" label-position="right">
-                                                <el-input v-model="adminListLimit"/>
-                                          </el-form-item>
                                           <el-form-item label="LOGO" label-position="right">
                                                 <el-upload
                                                       class="logo-image-upload"
@@ -108,7 +160,7 @@ onMounted(() =>{
                                     </el-tab-pane>
                                     <el-tab-pane label="服务" name="service">
                                           <el-form-item label="系统维护模式" label-position="right">
-                                                <el-switch v-model="systemMaintenance" inactive-text="关闭" active-text="开启"/>
+                                                <el-switch v-model="systemMaintenance" :inactive-value="0" :active-value="1" inactive-text="关闭" active-text="开启"/>
                                           </el-form-item>
                                           <el-form-item label="网站最大登录次数" label-position="right">
                                                 <el-input v-model="siteLoginMaxNumber"/>
@@ -125,7 +177,7 @@ onMounted(() =>{
                                     </el-tab-pane>
                                     <el-tab-pane label="日志" name="log">
                                           <el-form-item label="错误日志" label-position="right">
-                                                <el-input v-model="metaKeywords" type="textarea" :rows="12" disabled/>
+                                                <el-input v-model="errorLog" type="textarea" :rows="12" disabled/>
                                           </el-form-item>
                                     </el-tab-pane>
                               </el-tabs>
