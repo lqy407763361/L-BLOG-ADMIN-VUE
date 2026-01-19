@@ -22,7 +22,7 @@ export const userApi = {
     },
 
     //获取用户数量
-    async getUserTotal(){
-        return await httpRequest.get('/getUserTotal');
+    async getUserTotal(params = {}){
+        return await httpRequest.get('/getUserTotal', {params});
     }
 }

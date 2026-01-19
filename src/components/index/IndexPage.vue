@@ -33,7 +33,7 @@ const indexPageApi = async() => {
       const getAdminTotal = await adminApi.getAdminTotal();
       adminTotal.value = getAdminTotal.data;
       //获取管理员详情
-      const getAdminDetail = await adminApi.getAdminDetail();
+      const getAdminDetail = await adminApi.getAdminDetailByAdmin();
       adminDetail.value = getAdminDetail.data;
       //获取最近一周的访问人次列表
       const getLastWeekVisitsList = await dateRangeApi.getLastWeekVisitsList();

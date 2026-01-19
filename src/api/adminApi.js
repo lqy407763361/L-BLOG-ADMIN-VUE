@@ -29,5 +29,10 @@ export const adminApi = {
     //获取管理员数量
     async getAdminTotal(){
         return await httpRequest.get('/getAdminTotal');
+    },
+
+    //退出登录
+    async adminLoginOut(){
+        return await httpRequest.get('/adminLoginOut');
     }
 }
