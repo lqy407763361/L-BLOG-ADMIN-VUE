@@ -128,7 +128,7 @@ header{width:100%;border-bottom:1px solid #e5e5e5;position:fixed;background:#fff
 	}
 }
 
-/* list or detail */
+/* list & detail */
 .operation-bar{float:right;margin-top:20px;
 	a:not(:first-child){margin-left:3px;}
 	svg{width:1.4rem;height:1.4rem;}

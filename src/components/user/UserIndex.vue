@@ -1,5 +1,6 @@
 <script setup>
 import { ref } from 'vue'
+import { ElMessage } from 'element-plus'
 import CommonHeader from '@/components/common/CommonHeader.vue'
 import CommonSidebar from '@/components/common/CommonSidebar.vue'
 import CommonBreadcrumb from '@/components/common/CommonBreadcrumb.vue'
@@ -40,7 +41,7 @@ const checkAll = (e) => {
 //删除用户
 const deleteUser = async() => {
       if(selectUserId.value.length == 0){
-            alert("请选择要删除的用户！");
+            ElMessage.error('请选择要删除的用户！');
             return;
       }
       if(confirm("确定要删除选中的用户吗？")){
@@ -51,7 +52,7 @@ const deleteUser = async() => {
                   window.location.reload();
             }catch(error){
                   if(error.response.status == 500){
-                        alert("删除失败！");
+                        ElMessage.error('删除失败！');
                   }
             }
       }

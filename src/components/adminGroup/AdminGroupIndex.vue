@@ -1,5 +1,6 @@
 <script setup>
 import { ref } from 'vue'
+import { ElMessage } from 'element-plus'
 import CommonHeader from '@/components/common/CommonHeader.vue'
 import CommonSidebar from '@/components/common/CommonSidebar.vue'
 import CommonBreadcrumb from '@/components/common/CommonBreadcrumb.vue'
@@ -41,7 +42,7 @@ const checkAll = (e) => {
 //删除文章
 const deleteAdminGroup = async() => {
       if(selectAdminGroupId.value.length == 0){
-            alert("请选择要删除的管理员群组！");
+            ElMessage.error('请选择要删除的管理员群组！');
             return;
       }
       if(confirm("确定要删除选中的管理员群组吗？")){
@@ -52,7 +53,7 @@ const deleteAdminGroup = async() => {
                   window.location.reload();
             }catch(error){
                   if(error.response.status == 500){
-                        alert("删除失败！");
+                        ElMessage.error('删除失败！');
                   }
             }
       }

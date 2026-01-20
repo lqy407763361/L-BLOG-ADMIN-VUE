@@ -1,5 +1,6 @@
 <script setup>
 import { ref, computed } from 'vue'
+import { ElMessage } from 'element-plus'
 import CommonHeader from '@/components/common/CommonHeader.vue'
 import CommonSidebar from '@/components/common/CommonSidebar.vue'
 import CommonBreadcrumb from '@/components/common/CommonBreadcrumb.vue'
@@ -26,20 +27,20 @@ const routeValue = computed(() => route.params.id);
 const saveAdmin = async() => {
       if((password.value != "") || (confirmPassword.value != "")){
             if(password.value != confirmPassword.value){
-                  alert("密码不一致！");
+                  ElMessage.error('密码不一致！');
                   return false;
             } 
       }
       if(account.value == ""){
-            alert("账号不能为空！");
+            ElMessage.error('账号不能为空！');
             return false;
       }
       if(name.value == ""){
-            alert("名称不能为空！");
+            ElMessage.error('名称不能为空！');
             return false;
       }
       if(groupId.value == ""){
-            alert("管理员群组不能为空！");
+            ElMessage.error('管理员群组不能为空！');
             return false;
       }
 
@@ -56,22 +57,24 @@ const saveAdmin = async() => {
             if(routeValue.value == 'add'){
                   //添加时密码必填
                   if(password.value == ""){
-                        alert("密码不能为空！");
+                        ElMessage.error('密码不能为空！');
                         return false;
                   }
 
                   await adminApi.addAdmin(formData);
-                  alert("提交成功！");
+                  ElMessage.success('提交成功！');
                   router.push('/admin');
             }else{
                   formData.id = routeValue.value;
                   await adminApi.editAdminByAdmin(formData);
-                  alert("提交成功！");
+                  ElMessage.success('提交成功！');
                   location.reload();
             }
       }catch(error){
             if(error.response.status == 500){
-                  alert("提交失败！");
+                  ElMessage.error(error.response.data.message);
+            }else{
+                  ElMessage.error("提交失败！");
             }
       }
 };

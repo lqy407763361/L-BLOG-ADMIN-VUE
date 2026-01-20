@@ -1,5 +1,6 @@
 <script setup>
 import { ref, onMounted } from 'vue'
+import { ElMessage } from 'element-plus'
 import { Ckeditor } from '@ckeditor/ckeditor5-vue'
 import useCKEditor from '@/assets/js/useCKEditor.js'
 import CommonHeader from '@/components/common/CommonHeader.vue'
@@ -20,13 +21,14 @@ const saveAbout = async() => {
                   status: status.value,
                   content: content.value,
             }
-            console.log(formData);
             await aboutApi.editAbout(formData);
-            alert("提交成功！");
+            ElMessage.success('提交成功！');
             location.reload();
       }catch(error){
             if(error.response.status == 500){
-                  alert("提交失败！");
+                  ElMessage.error(error.response.data.message);
+            }else{
+                  ElMessage.error("提交失败！");
             }
       }
 };

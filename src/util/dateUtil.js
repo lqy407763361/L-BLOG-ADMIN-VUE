@@ -10,6 +10,11 @@ export const formatDateTime = (timestamp) => {
     return dayjs(timestamp * 1000).format('YYYY-MM-DD HH:mm:ss');
 }
 
+//当前年
+export const formatCurrentYear = () => {
+    return dayjs().format('YYYY')
+}
+
 //当前年月日
 export const formatCurrentDate = () => {
     return dayjs().format('YYYY-MM-DD')

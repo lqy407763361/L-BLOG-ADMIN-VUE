@@ -1,5 +1,6 @@
 <script setup>
 import { ref, computed } from 'vue'
+import { ElMessage } from 'element-plus'
 import CommonHeader from '@/components/common/CommonHeader.vue'
 import CommonSidebar from '@/components/common/CommonSidebar.vue'
 import CommonBreadcrumb from '@/components/common/CommonBreadcrumb.vue'
@@ -32,17 +33,19 @@ const saveAdminGroup = async() => {
             }
             if(routeValue.value == 'add'){
                   await adminGroupApi.addAdminGroup(formData);
-                  alert("提交成功！");
+                  ElMessage.success('提交成功！');
                   router.push('/adminGroup');
             }else{
                   formData.id = routeValue.value;
                   await adminGroupApi.editAdminGroup(formData);
-                  alert("提交成功！");
+                  ElMessage.success('提交成功！');
                   location.reload();
             }
       }catch(error){
             if(error.response.status == 500){
-                  alert("提交失败！");
+                  ElMessage.error(error.response.data.message);
+            }else{
+                  ElMessage.error("提交失败！");
             }
       }
 };

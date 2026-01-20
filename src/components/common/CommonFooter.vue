@@ -1,33 +1,21 @@
 <script setup>
+import { ref } from 'vue'
+import { siteConfigApi } from '@/api/siteConfigApi'
+import { formatCurrentYear } from '@/util/dateUtil'
+
+//获取API接口
+const siteConfigDetail = ref({});
+const commonFooterApi = async() => {
+      //获取网站配置
+      const getSiteConfigDetail = await siteConfigApi.getSiteConfigDetail();
+      siteConfigDetail.value = getSiteConfigDetail.data;
+}
+commonFooterApi();
 </script>
 
 <template>
-      <div class="footer"><a href="">L-BLOG</a> 2017-2025 Powered by L-WEB</div>
+      <div class="footer"><router-link to="/">{{ siteConfigDetail?.siteTitle || 'L-BLOG' }}</router-link> 2017-{{ formatCurrentYear() }} Powered by L-WEB</div>
       <input type="hidden" value="author:lqy407763361|project:L-WEB/L-BLOG">
-
-      <!--msg-popup-->
-      <!-- <div id="msg-popup">
-            <div class="msg-frame">
-                  <div class="msg-popup-title">提示信息</div>
-                  <div class="msg-popup-content"></div>
-                  <div class="msg-popup-button">
-                        <a>知道了</a>
-                  </div>
-            </div>
-      </div> -->
-      <!--msg-confirm-->
-      <!-- <div id="msg-confirm">
-            <div class="msg-frame">
-                  <div class="msg-confirm-title">提示信息</div>
-                  <div class="msg-confirm-content">操作后不可恢复！</div>
-                  <div class="msg-confirm-button">
-                        <p id="confirm-button"><a>确认</a></p>
-                        <p id="cancel-button"><a>取消</a></p>
-                  </div>
-            </div>
-      </div> -->
-      <!--loading-->
-      <!-- <img src="" class="loading-image fade"> -->
 </template>
 
 <style scoped>

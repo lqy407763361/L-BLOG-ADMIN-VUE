@@ -46,11 +46,13 @@ const saveSiteConfig = async() => {
                   errorLog: errorLog.value,
             }
             await siteConfigApi.editSiteConfig(formData);
-            alert("提交成功！");
+            ElMessage.success("提交成功！");
             location.reload();
       }catch(error){
             if(error.response.status == 500){
-                  alert("提交失败！");
+                  ElMessage.error(error.response.data.message);
+            }else{
+                  ElMessage.error("提交失败！");
             }
       }
 };

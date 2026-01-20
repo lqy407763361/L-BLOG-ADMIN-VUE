@@ -31,8 +31,23 @@ export const adminApi = {
         return await httpRequest.get('/getAdminTotal');
     },
 
+    //获取验证码
+    async generateCaptcha(){
+        return await httpRequest.get('/generateCaptcha');
+    },
+
+    //登录
+    async adminLogin(params = {}){
+        return await httpRequest.post('/adminLogin', params);
+    },
+
     //退出登录
     async adminLoginOut(){
         return await httpRequest.get('/adminLoginOut');
+    },
+
+    //获取RSA公钥
+    async getAdminRsaPublicKey(){
+        return await httpRequest.get('/getAdminRsaPublicKey');
     }
 }

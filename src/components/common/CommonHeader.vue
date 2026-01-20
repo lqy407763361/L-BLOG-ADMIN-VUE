@@ -1,6 +1,7 @@
 <script setup>
 import { useHead } from '@vueuse/head'
 import { ref, watch } from 'vue'
+import router from '@/router'
 import { getCurrentTimestamp } from '@/util/dateUtil'
 import { siteConfigApi } from '@/api/siteConfigApi'
 import { messageApi } from '@/api/messageApi'
@@ -13,7 +14,7 @@ const newMessageTotal = ref(0);
 const userTotal = ref(0);
 const newUserTotal = ref(0);
 const siteConfigDetail = ref({});
-const commonHeaderPageApi = async() => {
+const commonHeaderApi = async() => {
       //获取消息数量
       const getMessageTotal = await messageApi.getMessageTotal();
       messageTotal.value = getMessageTotal.data;
@@ -36,7 +37,7 @@ const commonHeaderPageApi = async() => {
       const getSiteConfigDetail = await siteConfigApi.getSiteConfigDetail();
       siteConfigDetail.value = getSiteConfigDetail.data;
 }
-commonHeaderPageApi();
+commonHeaderApi();
 
 //消息提醒
 const dropdownMenuStatus = ref(true);
@@ -47,7 +48,7 @@ const changeDropdownMenu = () =>{
 //退出登录
 const adminLoginOut = () =>{
       adminApi.adminLoginOut();
-      window.location.href = "/login";
+      router.push('/login');
 }
 
 //监听路由变化，设置网站配置信息
