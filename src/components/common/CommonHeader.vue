@@ -1,7 +1,8 @@
 <script setup>
 import { useHead } from '@vueuse/head'
-import { ref, watch } from 'vue'
+import { ref, onMounted, watch } from 'vue'
 import router from '@/router'
+import { authStore } from '@/util/authUtil'
 import { getCurrentTimestamp } from '@/util/dateUtil'
 import { siteConfigApi } from '@/api/siteConfigApi'
 import { messageApi } from '@/api/messageApi'
@@ -14,6 +15,8 @@ const newMessageTotal = ref(0);
 const userTotal = ref(0);
 const newUserTotal = ref(0);
 const siteConfigDetail = ref({});
+const authStoreInstance = authStore();
+
 const commonHeaderApi = async() => {
       //获取消息数量
       const getMessageTotal = await messageApi.getMessageTotal();
@@ -37,7 +40,6 @@ const commonHeaderApi = async() => {
       const getSiteConfigDetail = await siteConfigApi.getSiteConfigDetail();
       siteConfigDetail.value = getSiteConfigDetail.data;
 }
-commonHeaderApi();
 
 //消息提醒
 const dropdownMenuStatus = ref(true);
@@ -48,8 +50,15 @@ const changeDropdownMenu = () =>{
 //退出登录
 const adminLoginOut = () =>{
       adminApi.adminLoginOut();
+      authStoreInstance.clearAuth();
       router.push('/login');
 }
+
+//组件加载完成后再加载接口
+onMounted(async () =>{
+      //加载接口
+      await commonHeaderApi();
+});
 
 //监听路由变化，设置网站配置信息
 watch(siteConfigDetail, (newVal) => {

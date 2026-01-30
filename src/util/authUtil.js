@@ -17,9 +17,5 @@ export const authStore = defineStore('auth', () => {
         return token && token !== 'null';
     }
 
-    // 添加获取方法
-    const getAccessToken = () => localStorage.getItem('accessToken');
-    const getRefreshToken = () => localStorage.getItem('refreshToken');
-
-    return {setAuth, clearAuth, isLoggedIn, getAccessToken, getRefreshToken}
+    return {setAuth, clearAuth, isLoggedIn}
 });
