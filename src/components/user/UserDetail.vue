@@ -1,11 +1,13 @@
 <script setup>
-import { ref, computed } from 'vue'
+import { ref, onMounted, computed } from 'vue'
 import { ElMessage } from 'element-plus'
 import CommonHeader from '@/components/common/CommonHeader.vue'
 import CommonSidebar from '@/components/common/CommonSidebar.vue'
 import CommonBreadcrumb from '@/components/common/CommonBreadcrumb.vue'
 import CommonFooter from '@/components/common/CommonFooter.vue'
+import router from '@/router'
 import { useRoute } from 'vue-router'
+import { authStore } from '@/util/authUtil'
 import { formatDate } from '@/util/dateUtil'
 import { userApi } from '@/api/userApi'
 
@@ -27,7 +29,7 @@ const route = useRoute();
 const routeValue = computed(() => route.params.id);
 
 //提交表单
-const saveUser = async() => {
+const saveUser = async () => {
       try{
             const formData = {
                   id: routeValue.value,
@@ -43,12 +45,14 @@ const saveUser = async() => {
                   ElMessage.error("提交失败！");
             }
       }
-};
+}
 
 //获取API接口
 const userDetail = ref({});
+const authStoreInstance = authStore();
+
 //用户接口
-const userIndexApi = async() => {
+const userIndexApi = async () => {
       const getUserDetailByAdmin = await userApi.getUserDetailByAdmin({
             userId: routeValue.value,
       });
@@ -60,8 +64,16 @@ const userIndexApi = async() => {
       visitIp.value = userDetail.value.visitIp || '';
 }
 
-//加载接口
-userIndexApi();
+//组件加载完成后再加载接口
+onMounted(async () =>{
+      //判断是否登录
+      if(!authStoreInstance.isLoggedIn()){
+            router.push('/login');
+      }
+
+      //加载接口
+      await userIndexApi();
+});
 </script>
 
 <template>

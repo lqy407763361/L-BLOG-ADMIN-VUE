@@ -21,7 +21,12 @@ export const adminApi = {
         return await httpRequest.get('/getAdminList', {params});
     },
 
-    //获取管理员详情
+    //获取管理员详情（当前登录的管理员）
+    async getAdminDetail(){
+        return await httpRequest.get('/getAdminDetail');
+    },
+    
+    //获取管理员详情（管理员列表和详情使用）
     async getAdminDetailByAdmin(adminId){
         return await httpRequest.get('/getAdminDetailByAdmin', {params: adminId});
     },
@@ -49,5 +54,5 @@ export const adminApi = {
     //获取RSA公钥
     async getAdminRsaPublicKey(){
         return await httpRequest.get('/getAdminRsaPublicKey');
-    }
+    },
 }

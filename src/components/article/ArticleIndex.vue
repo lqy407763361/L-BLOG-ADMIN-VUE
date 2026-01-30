@@ -1,12 +1,14 @@
 <script setup>
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 import { ElMessage } from 'element-plus'
 import CommonHeader from '@/components/common/CommonHeader.vue'
 import CommonSidebar from '@/components/common/CommonSidebar.vue'
 import CommonBreadcrumb from '@/components/common/CommonBreadcrumb.vue'
 import CommonFooter from '@/components/common/CommonFooter.vue'
+import router from '@/router'
+import { authStore } from '@/util/authUtil'
 import { formatDate } from '@/util/dateUtil'
-import { pageTotal } from '@/util/pageTotal'
+import { pageTotal } from '@/util/pageTotalUtil'
 import { articleApi } from '@/api/articleApi'
 import { articleCategoryApi } from '@/api/articleCategoryApi'
 
@@ -43,7 +45,7 @@ const checkAll = (e) => {
 }
 
 //删除文章
-const deleteArticle = async() => {
+const deleteArticle = async () => {
       if(selectArticleId.value.length == 0){
             ElMessage.error('请选择要删除的文章！');
             return;
@@ -65,8 +67,9 @@ const deleteArticle = async() => {
 //获取API接口
 const articleList = ref({});
 const articleCategoryList = ref({});
+const authStoreInstance = authStore();
 //文章接口
-const articleIndexApi = async(params={}) => {
+const articleIndexApi = async (params={}) => {
       const getArticleList = await articleApi.getArticleList({
             page: params.page,
             title: params.title,
@@ -76,13 +79,22 @@ const articleIndexApi = async(params={}) => {
       articleList.value = getArticleList.data;
 }
 //文章分类接口
-const articleCategoryIndexApi = async() => {
+const articleCategoryIndexApi = async () => {
       const getArticleCategoryList = await articleCategoryApi.getArticleCategoryList();
       articleCategoryList.value = getArticleCategoryList.data;
 }
-//加载接口
-articleIndexApi();
-articleCategoryIndexApi();
+
+//组件加载完成后再加载接口
+onMounted(async () =>{
+      //判断是否登录
+      if(!authStoreInstance.isLoggedIn()){
+            router.push('/login');
+      }
+
+      //加载接口
+      await articleIndexApi();
+      await articleCategoryIndexApi();
+});
 </script>
 
 <template>

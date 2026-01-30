@@ -1,5 +1,5 @@
 <script setup>
-import { ref, computed } from 'vue'
+import { ref, onMounted, computed } from 'vue'
 import { ElMessage } from 'element-plus'
 import CommonHeader from '@/components/common/CommonHeader.vue'
 import CommonSidebar from '@/components/common/CommonSidebar.vue'
@@ -8,6 +8,7 @@ import CommonFooter from '@/components/common/CommonFooter.vue'
 import powerList from "@/config/powerConfig";
 import router from '@/router'
 import { useRoute } from 'vue-router'
+import { authStore } from '@/util/authUtil'
 import { formatCurrentDate, formatDate } from '@/util/dateUtil'
 import { adminGroupApi } from '@/api/adminGroupApi'
 
@@ -22,7 +23,7 @@ const route = useRoute();
 const routeValue = computed(() => route.params.id);
 
 //提交表单
-const saveAdminGroup = async() => {
+const saveAdminGroup = async () => {
       try{
             const formData = {
                   name: name.value,
@@ -52,8 +53,9 @@ const saveAdminGroup = async() => {
 
 //获取API接口
 const adminGroupDetail = ref({});
+const authStoreInstance = authStore();
 //文章分类接口
-const adminGroupIndexApi = async() => {
+const adminGroupIndexApi = async () => {
       if(routeValue.value == 'add'){
             return;
       }
@@ -69,8 +71,16 @@ const adminGroupIndexApi = async() => {
       editPower.value = adminGroupDetail.value.editPower ? adminGroupDetail.value.editPower.split(",") : [];
 }
 
-//加载接口
-adminGroupIndexApi();
+//组件加载完成后再加载接口
+onMounted(async () =>{
+      //判断是否登录
+      if(!authStoreInstance.isLoggedIn()){
+            router.push('/login');
+      }
+
+      //加载接口
+      await adminGroupIndexApi();
+});
 </script>
 
 <template>

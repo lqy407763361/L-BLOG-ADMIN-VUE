@@ -9,6 +9,7 @@ import CommonBreadcrumb from '@/components/common/CommonBreadcrumb.vue'
 import CommonFooter from '@/components/common/CommonFooter.vue'
 import router from '@/router'
 import { useRoute } from 'vue-router'
+import { authStore } from '@/util/authUtil'
 import { formatCurrentDate, formatDate } from '@/util/dateUtil'
 import { articleApi } from '@/api/articleApi'
 import { articleCategoryApi } from '@/api/articleCategoryApi'
@@ -26,7 +27,7 @@ const route = useRoute();
 const routeValue = computed(() => route.params.id);
 
 //提交表单
-const saveArticle = async() => {
+const saveArticle = async () => {
       try{
             const formData = {
                   title: title.value,
@@ -57,8 +58,9 @@ const saveArticle = async() => {
 //获取API接口
 const articleDetail = ref({});
 const articleCategoryList = ref({});
+const authStoreInstance = authStore();
 //文章接口
-const articleIndexApi = async() => {
+const articleIndexApi = async () => {
       if(routeValue.value == 'add'){
             return;
       }
@@ -74,19 +76,24 @@ const articleIndexApi = async() => {
       content.value = articleDetail.value.content || '';
 }
 //文章分类接口
-const articleCategoryIndexApi = async() => {
+const articleCategoryIndexApi = async () => {
       const getArticleCategoryList = await articleCategoryApi.getArticleCategoryList();
       articleCategoryList.value = getArticleCategoryList.data;
 }
 
 //组件加载完成后再加载接口
-onMounted(() =>{
+onMounted(async () =>{
+      //判断是否登录
+      if(!authStoreInstance.isLoggedIn()){
+            router.push('/login');
+      }
+
       // 加载CKEditor配置
       config.value = useCKEditor.config();
 
       //加载接口
-      articleIndexApi();
-      articleCategoryIndexApi();
+      await articleIndexApi();
+      await articleCategoryIndexApi();
 });
 </script>
 

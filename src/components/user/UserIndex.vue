@@ -1,12 +1,14 @@
 <script setup>
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 import { ElMessage } from 'element-plus'
 import CommonHeader from '@/components/common/CommonHeader.vue'
 import CommonSidebar from '@/components/common/CommonSidebar.vue'
 import CommonBreadcrumb from '@/components/common/CommonBreadcrumb.vue'
 import CommonFooter from '@/components/common/CommonFooter.vue'
+import router from '@/router'
+import { authStore } from '@/util/authUtil'
 import { formatDate } from '@/util/dateUtil'
-import { pageTotal } from '@/util/pageTotal'
+import { pageTotal } from '@/util/pageTotalUtil'
 import { userApi } from '@/api/userApi'
 
 //搜索
@@ -39,7 +41,7 @@ const checkAll = (e) => {
 }
 
 //删除用户
-const deleteUser = async() => {
+const deleteUser = async () => {
       if(selectUserId.value.length == 0){
             ElMessage.error('请选择要删除的用户！');
             return;
@@ -60,8 +62,10 @@ const deleteUser = async() => {
 
 //获取API接口
 const userList = ref({});
+const authStoreInstance = authStore();
+
 //文章接口
-const userIndexApi = async(params={}) => {
+const userIndexApi = async (params={}) => {
       const getUserList = await userApi.getUserList({
             page: params.page,
             name: params.name,
@@ -69,8 +73,17 @@ const userIndexApi = async(params={}) => {
       });
       userList.value = getUserList.data;
 }
-//加载接口
-userIndexApi();
+
+//组件加载完成后再加载接口
+onMounted(async () =>{
+      //判断是否登录
+      if(!authStoreInstance.isLoggedIn()){
+            router.push('/login');
+      }
+
+      //加载接口
+      await userIndexApi();
+});
 </script>
 
 <template>

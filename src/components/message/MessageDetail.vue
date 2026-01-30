@@ -1,10 +1,12 @@
 <script setup>
-import { ref, computed } from 'vue'
+import { ref, onMounted, computed } from 'vue'
 import CommonHeader from '@/components/common/CommonHeader.vue'
 import CommonSidebar from '@/components/common/CommonSidebar.vue'
 import CommonBreadcrumb from '@/components/common/CommonBreadcrumb.vue'
 import CommonFooter from '@/components/common/CommonFooter.vue'
+import router from '@/router'
 import { useRoute } from 'vue-router'
+import { authStore } from '@/util/authUtil'
 import { formatDate } from '@/util/dateUtil'
 import { messageApi } from '@/api/messageApi'
 
@@ -14,8 +16,10 @@ const routeValue = computed(() => route.params.id);
 
 //获取API接口
 const messageDetail = ref({});
+const authStoreInstance = authStore();
+
 //消息接口
-const messageIndexApi = async() => {
+const messageIndexApi = async () => {
       if(routeValue.value < 1){
             return;
       }
@@ -30,8 +34,16 @@ const messageIndexApi = async() => {
       await messageApi.editMessage({id: routeValue.value});
 }
 
-//加载接口
-messageIndexApi();
+//组件加载完成后再加载接口
+onMounted(async () =>{
+      //判断是否登录
+      if(!authStoreInstance.isLoggedIn()){
+            router.push('/login');
+      }
+
+      //加载接口
+      await messageIndexApi();
+});
 </script>
 
 <template>

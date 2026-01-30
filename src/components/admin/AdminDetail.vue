@@ -1,5 +1,5 @@
 <script setup>
-import { ref, computed } from 'vue'
+import { ref, onMounted, computed } from 'vue'
 import { ElMessage } from 'element-plus'
 import CommonHeader from '@/components/common/CommonHeader.vue'
 import CommonSidebar from '@/components/common/CommonSidebar.vue'
@@ -7,6 +7,7 @@ import CommonBreadcrumb from '@/components/common/CommonBreadcrumb.vue'
 import CommonFooter from '@/components/common/CommonFooter.vue'
 import router from '@/router'
 import { useRoute } from 'vue-router'
+import { authStore } from '@/util/authUtil'
 import { formatCurrentDate, formatDate } from '@/util/dateUtil'
 import { adminApi } from '@/api/adminApi'
 import { adminGroupApi } from '@/api/adminGroupApi'
@@ -24,7 +25,7 @@ const route = useRoute();
 const routeValue = computed(() => route.params.id);
 
 //提交表单
-const saveAdmin = async() => {
+const saveAdmin = async () => {
       if((password.value != "") || (confirmPassword.value != "")){
             if(password.value != confirmPassword.value){
                   ElMessage.error('密码不一致！');
@@ -82,8 +83,9 @@ const saveAdmin = async() => {
 //获取API接口
 const adminDetail = ref({});
 const adminGroupList = ref({});
+const authStoreInstance = authStore();
 //管理员接口
-const adminIndexApi = async() => {
+const adminIndexApi = async () => {
       if(routeValue.value == 'add'){
             return;
       }
@@ -100,14 +102,22 @@ const adminIndexApi = async() => {
       description.value = adminDetail.value.description || '';
 }
 //管理员群组接口
-const adminGroupIndexApi = async() => {
+const adminGroupIndexApi = async () => {
       const getAdminGroupList = await adminGroupApi.getAdminGroupList();
       adminGroupList.value = getAdminGroupList.data;
 }
 
-//加载接口
-adminIndexApi();
-adminGroupIndexApi();
+//组件加载完成后再加载接口
+onMounted(async () =>{
+      //判断是否登录
+      if(!authStoreInstance.isLoggedIn()){
+            router.push('/login');
+      }
+
+      //加载接口
+      await adminIndexApi();
+      await adminGroupIndexApi();
+});
 </script>
 
 <template>

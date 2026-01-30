@@ -1,10 +1,12 @@
 <script setup>
-import { ref, watch } from 'vue'
+import { ref, onMounted, watch } from 'vue'
 import useECharts from '@/assets/js/useECharts.js'
 import CommonHeader from '@/components/common/CommonHeader.vue'
 import CommonSidebar from '@/components/common/CommonSidebar.vue'
 import CommonBreadcrumb from '@/components/common/CommonBreadcrumb.vue'
 import CommonFooter from '@/components/common/CommonFooter.vue'
+import router from '@/router'
+import { authStore } from '@/util/authUtil'
 import { articleApi } from '@/api/articleApi'
 import { messageApi } from '@/api/messageApi'
 import { userApi } from '@/api/userApi'
@@ -19,7 +21,9 @@ const userTotal = ref(0);
 const adminTotal = ref(0);
 const adminDetail = ref('');
 const lastWeekVisitsList = ref({});
-const indexPageApi = async() => {
+const authStoreInstance = authStore();
+
+const indexPageApi = async () => {
       //获取文章数量
       const getArticleTotal = await articleApi.getArticleTotal();
       articleTotal.value = getArticleTotal.data;
@@ -33,13 +37,12 @@ const indexPageApi = async() => {
       const getAdminTotal = await adminApi.getAdminTotal();
       adminTotal.value = getAdminTotal.data;
       //获取管理员详情
-      const getAdminDetail = await adminApi.getAdminDetailByAdmin();
+      const getAdminDetail = await adminApi.getAdminDetail();
       adminDetail.value = getAdminDetail.data;
       //获取最近一周的访问人次列表
       const getLastWeekVisitsList = await dateRangeApi.getLastWeekVisitsList();
       lastWeekVisitsList.value = getLastWeekVisitsList.data;
 }
-indexPageApi();
 
 //图表配置
 const echartsData = ref({});
@@ -64,6 +67,17 @@ watch(lastWeekVisitsList, (newValue) => {
       }
 }, {deep: true});
 const { chartBody } = useECharts(echartsData);
+
+//组件加载完成后再加载接口
+onMounted(async () =>{
+      //判断是否登录
+      if(!authStoreInstance.isLoggedIn()){
+            router.push('/login');
+      }
+
+      //加载接口
+      await indexPageApi();
+});
 </script>
 
 <template>

@@ -1,11 +1,13 @@
 <script setup>
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 import CommonHeader from '@/components/common/CommonHeader.vue'
 import CommonSidebar from '@/components/common/CommonSidebar.vue'
 import CommonBreadcrumb from '@/components/common/CommonBreadcrumb.vue'
 import CommonFooter from '@/components/common/CommonFooter.vue'
+import router from '@/router'
+import { authStore } from '@/util/authUtil'
 import { formatDate } from '@/util/dateUtil'
-import { pageTotal } from '@/util/pageTotal'
+import { pageTotal } from '@/util/pageTotalUtil'
 import { messageApi } from '@/api/messageApi'
 
 //搜索
@@ -41,7 +43,7 @@ const checkAll = (e) => {
 }
 
 //删除信息
-const deleteMessage = async() => {
+const deleteMessage = async () => {
       if(selectMessageId.value.length == 0){
             alert("请选择要删除的信息！");
             return;
@@ -62,8 +64,10 @@ const deleteMessage = async() => {
 
 //获取API接口
 const messageList = ref({});
+const authStoreInstance = authStore();
+
 //信息接口
-const messageIndexApi = async(params={}) => {
+const messageIndexApi = async (params={}) => {
       const getMessageList = await messageApi.getMessageList({
             page: params.page,
             title: params.title,
@@ -72,8 +76,17 @@ const messageIndexApi = async(params={}) => {
       });
       messageList.value = getMessageList.data;
 }
-//加载接口
-messageIndexApi();
+
+//组件加载完成后再加载接口
+onMounted(async () =>{
+      //判断是否登录
+      if(!authStoreInstance.isLoggedIn()){
+            router.push('/login');
+      }
+
+      //加载接口
+      await messageIndexApi();
+});
 </script>
 
 <template>

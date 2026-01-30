@@ -1,12 +1,14 @@
 <script setup>
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 import { ElMessage } from 'element-plus'
 import CommonHeader from '@/components/common/CommonHeader.vue'
 import CommonSidebar from '@/components/common/CommonSidebar.vue'
 import CommonBreadcrumb from '@/components/common/CommonBreadcrumb.vue'
 import CommonFooter from '@/components/common/CommonFooter.vue'
+import router from '@/router'
+import { authStore } from '@/util/authUtil'
 import { formatDate } from '@/util/dateUtil'
-import { pageTotal } from '@/util/pageTotal'
+import { pageTotal } from '@/util/pageTotalUtil'
 import { articleCategoryApi } from '@/api/articleCategoryApi'
 
 //搜索
@@ -40,7 +42,7 @@ const checkAll = (e) => {
 }
 
 //删除文章
-const deleteArticleCategory = async() => {
+const deleteArticleCategory = async () => {
       if(selectArticleCategoryId.value.length == 0){
             ElMessage.success('请选择要删除的文章分类！');
             return;
@@ -61,8 +63,9 @@ const deleteArticleCategory = async() => {
 
 //获取API接口
 const articleCategoryList = ref({});
+const authStoreInstance = authStore();
 //文章分类接口
-const articleCategoryIndexApi = async(params={}) => {
+const articleCategoryIndexApi = async (params={}) => {
       const getArticleCategoryList = await articleCategoryApi.getArticleCategoryList({
             page: params.page,
             name: params.name,
@@ -70,8 +73,17 @@ const articleCategoryIndexApi = async(params={}) => {
       });
       articleCategoryList.value = getArticleCategoryList.data;
 }
-//加载接口
-articleCategoryIndexApi();
+
+//组件加载完成后再加载接口
+onMounted(async () =>{
+      //判断是否登录
+      if(authStoreInstance.isLoggedIn()){
+            router.push('/');
+      }
+
+      //加载接口
+      await articleCategoryIndexApi();
+});
 </script>
 
 <template>

@@ -1,12 +1,14 @@
 <script setup>
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 import { ElMessage } from 'element-plus'
 import CommonHeader from '@/components/common/CommonHeader.vue'
 import CommonSidebar from '@/components/common/CommonSidebar.vue'
 import CommonBreadcrumb from '@/components/common/CommonBreadcrumb.vue'
 import CommonFooter from '@/components/common/CommonFooter.vue'
+import router from '@/router'
+import { authStore } from '@/util/authUtil'
 import { formatDate } from '@/util/dateUtil'
-import { pageTotal } from '@/util/pageTotal'
+import { pageTotal } from '@/util/pageTotalUtil'
 import { adminGroupApi } from '@/api/adminGroupApi'
 
 //搜索
@@ -40,7 +42,7 @@ const checkAll = (e) => {
 }
 
 //删除文章
-const deleteAdminGroup = async() => {
+const deleteAdminGroup = async () => {
       if(selectAdminGroupId.value.length == 0){
             ElMessage.error('请选择要删除的管理员群组！');
             return;
@@ -61,8 +63,9 @@ const deleteAdminGroup = async() => {
 
 //获取API接口
 const adminGroupList = ref({});
+const authStoreInstance = authStore();
 //管理员群组接口
-const adminGroupIndexApi = async(params={}) => {
+const adminGroupIndexApi = async (params={}) => {
       const getAdminGroupList = await adminGroupApi.getAdminGroupList({
             page: params.page,
             name: params.name,
@@ -70,8 +73,17 @@ const adminGroupIndexApi = async(params={}) => {
       });
       adminGroupList.value = getAdminGroupList.data;
 }
-//加载接口
-adminGroupIndexApi();
+
+//组件加载完成后再加载接口
+onMounted(async () =>{
+      //判断是否登录
+      if(!authStoreInstance.isLoggedIn()){
+            router.push('/login');
+      }
+
+      //加载接口
+      await adminGroupIndexApi();
+});
 </script>
 
 <template>

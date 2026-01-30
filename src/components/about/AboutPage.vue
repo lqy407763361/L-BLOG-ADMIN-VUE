@@ -7,6 +7,8 @@ import CommonHeader from '@/components/common/CommonHeader.vue'
 import CommonSidebar from '@/components/common/CommonSidebar.vue'
 import CommonBreadcrumb from '@/components/common/CommonBreadcrumb.vue'
 import CommonFooter from '@/components/common/CommonFooter.vue'
+import router from '@/router'
+import { authStore } from '@/util/authUtil'
 import { aboutApi } from '@/api/aboutApi'
 
 const status = ref('');
@@ -15,7 +17,7 @@ const editor = ref(useCKEditor.editor);
 const config = ref(null);
 
 //提交表单
-const saveAbout = async() => {
+const saveAbout = async () => {
       try{
             const formData = {
                   status: status.value,
@@ -31,12 +33,13 @@ const saveAbout = async() => {
                   ElMessage.error("提交失败！");
             }
       }
-};
+}
 
 //获取API接口
 const aboutDetail = ref({});
+const authStoreInstance = authStore();
 //文章接口
-const aboutIndexApi = async() => {
+const aboutIndexApi = async () => {
       const getAboutDetail = await aboutApi.getAboutDetail();
       aboutDetail.value = getAboutDetail.data;
       status.value = aboutDetail.value.status || '';
@@ -44,13 +47,18 @@ const aboutIndexApi = async() => {
 }
 
 //组件加载完成后再加载接口
-onMounted(() =>{
+onMounted(async () =>{
+      //判断是否登录
+      if(!authStoreInstance.isLoggedIn()){
+            router.push('/login');
+      }
+
       //加载CKEditor配置
       config.value = useCKEditor.config();
 
       //加载接口
-      aboutIndexApi();
-})
+      await aboutIndexApi();
+});
 </script>
 
 <template>

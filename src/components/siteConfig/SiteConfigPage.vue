@@ -7,6 +7,8 @@ import CommonHeader from '@/components/common/CommonHeader.vue'
 import CommonSidebar from '@/components/common/CommonSidebar.vue'
 import CommonBreadcrumb from '@/components/common/CommonBreadcrumb.vue'
 import CommonFooter from '@/components/common/CommonFooter.vue'
+import router from '@/router'
+import { authStore } from '@/util/authUtil'
 import { siteConfigApi } from '@/api/siteConfigApi'
 
 const formTab = ref('seo');
@@ -28,7 +30,7 @@ const editor = ref(useCKEditor.editor);
 const config = ref(null);
 
 //提交表单
-const saveSiteConfig = async() => {
+const saveSiteConfig = async () => {
       try{
             const formData = {
                   metaTitle: metaTitle.value,
@@ -55,12 +57,14 @@ const saveSiteConfig = async() => {
                   ElMessage.error("提交失败！");
             }
       }
-};
+}
 
 //获取API接口
 const siteConfigDetail = ref({});
+const authStoreInstance = authStore();
+
 //配置接口
-const siteConfigIndexApi = async() => {
+const siteConfigIndexApi = async () => {
       const getSiteConfigDetail = await siteConfigApi.getSiteConfigDetail();
       siteConfigDetail.value = getSiteConfigDetail.data;
       metaTitle.value = siteConfigDetail.value.metaTitle || '';
@@ -81,7 +85,7 @@ const siteConfigIndexApi = async() => {
 //上传图片
 const handleAvatarSuccess = (response, uploadFile) => {
       imageUrl.value = URL.createObjectURL(uploadFile.raw);
-};
+}
 const beforeAvatarUpload = (rawFile) => {
       if(rawFile.type !== 'image/jpeg/png'){
             ElMessage.error('文件格式不符！')
@@ -94,13 +98,18 @@ const beforeAvatarUpload = (rawFile) => {
 }
 
 //组件加载完成后再加载接口
-onMounted(() =>{
+onMounted(async () =>{
+      //判断是否登录
+      if(!authStoreInstance.isLoggedIn()){
+            router.push('/login');
+      }
+
       //加载CKEditor配置
       config.value = useCKEditor.config();
 
       //加载接口
-      siteConfigIndexApi();
-})
+      await siteConfigIndexApi();
+});
 </script>
 
 <template>

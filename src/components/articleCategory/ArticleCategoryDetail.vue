@@ -1,5 +1,5 @@
 <script setup>
-import { ref, computed } from 'vue'
+import { ref, onMounted, computed } from 'vue'
 import { ElMessage } from 'element-plus'
 import CommonHeader from '@/components/common/CommonHeader.vue'
 import CommonSidebar from '@/components/common/CommonSidebar.vue'
@@ -7,6 +7,7 @@ import CommonBreadcrumb from '@/components/common/CommonBreadcrumb.vue'
 import CommonFooter from '@/components/common/CommonFooter.vue'
 import router from '@/router'
 import { useRoute } from 'vue-router'
+import { authStore } from '@/util/authUtil'
 import { formatCurrentDate, formatDate } from '@/util/dateUtil'
 import { articleCategoryApi } from '@/api/articleCategoryApi'
 
@@ -20,7 +21,7 @@ const route = useRoute();
 const routeValue = computed(() => route.params.id);
 
 //提交表单
-const saveArticleCategory = async() => {
+const saveArticleCategory = async () => {
       try{
             const formData = {
                   name: name.value,
@@ -49,8 +50,9 @@ const saveArticleCategory = async() => {
 
 //获取API接口
 const articleCategoryDetail = ref({});
+const authStoreInstance = authStore();
 //文章分类接口
-const articleCategoryIndexApi = async() => {
+const articleCategoryIndexApi = async () => {
       if(routeValue.value == 'add'){
             return;
       }
@@ -65,8 +67,16 @@ const articleCategoryIndexApi = async() => {
       description.value = articleCategoryDetail.value.description || '';
 }
 
-//加载接口
-articleCategoryIndexApi();
+//组件加载完成后再加载接口
+onMounted(async () =>{
+      //判断是否登录
+      if(authStoreInstance.isLoggedIn()){
+            router.push('/');
+      }
+
+      //加载接口
+      await articleCategoryIndexApi();
+});
 </script>
 
 <template>

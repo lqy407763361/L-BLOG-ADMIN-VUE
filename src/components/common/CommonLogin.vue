@@ -1,8 +1,10 @@
 <script setup>
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 import { ElMessage } from 'element-plus'
+import JSEncrypt from 'jsencrypt'
 import CommonFooter from '@/components/common/CommonFooter.vue'
 import router from '@/router'
+import { authStore } from '@/util/authUtil'
 import { adminApi } from '@/api/adminApi'
 import { siteConfigApi } from '@/api/siteConfigApi'
 
@@ -11,25 +13,45 @@ const password = ref('');
 const captchaCode = ref('');
 const captchaImage = ref('');
 const siteConfigDetail = ref({});
+const adminRsaPublicKey = ref('');
+const authStoreInstance = authStore();
 
 //获取验证码
-const refreshCaptcha = async() =>{
+const refreshCaptcha = async () =>{
       const generateCaptcha = await adminApi.generateCaptcha();
       captchaImage.value = 'data:image/png;base64,' + generateCaptcha.data;
       captchaCode.value = '';
 }
 
+//RSA加密密码
+const encryptPassword = (password, rsaPublicKey) => {
+      const encryptData = new JSEncrypt();
+      encryptData.setPublicKey(rsaPublicKey);
+
+      return encryptData.encrypt(password);
+}
+
 //提交表单
-const login = async() => {
+const login = async () => {
+      if((!account.value.trim()) || (!password.value.trim()) || (!captchaCode.value.trim())){
+            ElMessage.error('请填写完整！');
+
+            return false;
+      }
+
       try{
             const formData = {
                   account: account.value,
-                  password: password.value,
+                  password: encryptPassword(password.value, adminRsaPublicKey.value),
                   captchaCode: captchaCode.value,
             }
-            await adminApi.adminLogin(formData);
+            const authToken = await adminApi.adminLogin(formData);
+            authStoreInstance.setAuth({
+                  accessToken: authToken.data.accessToken,
+                  refreshToken: authToken.data.refreshToken,
+            });
             ElMessage.success('登录成功！');
-            router.push('/index');
+            router.push('/');
       }catch(error){
             if(error.response.status == 500){
                   ElMessage.error(error.response.data.message);
@@ -38,17 +60,29 @@ const login = async() => {
             }
             await refreshCaptcha();
       }
-};
+}
 
-const commonLoginApi = async() => {
+const commonLoginApi = async () => {
       //获取网站配置
       const getSiteConfigDetail = await siteConfigApi.getSiteConfigDetail();
       siteConfigDetail.value = getSiteConfigDetail.data;
 
-      //获取验证码
-      await refreshCaptcha();
+      //获取RSA公钥
+      const getAdminRsaPublicKey = await adminApi.getAdminRsaPublicKey();
+      adminRsaPublicKey.value = getAdminRsaPublicKey.data;
 }
-commonLoginApi();
+
+//组件加载完成后再加载接口
+onMounted(async () =>{
+      //判断是否登录
+      if(authStoreInstance.isLoggedIn()){
+            router.push('/');
+      }
+
+      //加载接口
+      await commonLoginApi();
+      await refreshCaptcha();
+});
 </script>
 
 <template>

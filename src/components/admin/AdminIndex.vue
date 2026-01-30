@@ -1,12 +1,14 @@
 <script setup>
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 import { ElMessage } from 'element-plus'
 import CommonHeader from '@/components/common/CommonHeader.vue'
 import CommonSidebar from '@/components/common/CommonSidebar.vue'
 import CommonBreadcrumb from '@/components/common/CommonBreadcrumb.vue'
 import CommonFooter from '@/components/common/CommonFooter.vue'
+import router from '@/router'
+import { authStore } from '@/util/authUtil'
 import { formatDate } from '@/util/dateUtil'
-import { pageTotal } from '@/util/pageTotal'
+import { pageTotal } from '@/util/pageTotalUtil'
 import { adminApi } from '@/api/adminApi'
 import { adminGroupApi } from '@/api/adminGroupApi'
 
@@ -43,7 +45,7 @@ const checkAll = (e) => {
 }
 
 //删除管理员
-const deleteAdmin = async() => {
+const deleteAdmin = async () => {
       if(selectAdminId.value.length == 0){
             ElMessage.error('请选择要删除的管理员！');
             return;
@@ -65,8 +67,9 @@ const deleteAdmin = async() => {
 //获取API接口
 const adminList = ref({});
 const adminGroupList = ref({});
+const authStoreInstance = authStore();
 //管理员接口
-const adminIndexApi = async(params={}) => {
+const adminIndexApi = async (params={}) => {
       const getAdminList = await adminApi.getAdminList({
             page: params.page,
             name: params.name,
@@ -76,13 +79,22 @@ const adminIndexApi = async(params={}) => {
       adminList.value = getAdminList.data;
 }
 //管理员群组接口
-const adminGroupIndexApi = async() => {
+const adminGroupIndexApi = async () => {
       const getAdminGroupList = await adminGroupApi.getAdminGroupList();
       adminGroupList.value = getAdminGroupList.data;
 }
-//加载接口
-adminIndexApi();
-adminGroupIndexApi();
+
+//组件加载完成后再加载接口
+onMounted(async () =>{
+      //判断是否登录
+      if(!authStoreInstance.isLoggedIn()){
+            router.push('/login');
+      }
+
+      //加载接口
+      await adminIndexApi();
+      await adminGroupIndexApi();
+});
 </script>
 
 <template>

@@ -3,13 +3,14 @@ import axios from 'axios';
 const httpRequest = axios.create({
     baseURL: 'http://localhost:8080',
     timeout: 10000,
+    withCredentials: true,
 });
 
 //请求拦截器
 httpRequest.interceptors.request.use(function(config){
-    const token = localStorage.getItem('token');
-    if(token && token!==''){
-        config.headers['token'] = token;
+    const accessToken = localStorage.getItem('accessToken');
+    if(accessToken && accessToken!==''){
+        config.headers['accessToken'] = accessToken;
     }
 
     return config;
