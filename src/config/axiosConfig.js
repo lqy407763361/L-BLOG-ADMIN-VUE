@@ -8,9 +8,13 @@ const httpRequest = axios.create({
 
 //请求拦截器
 httpRequest.interceptors.request.use(function(config){
-    const accessToken = localStorage.getItem('accessToken');
-    if(accessToken && accessToken!==''){
-        config.headers['accessToken'] = accessToken;
+    const adminAccessToken = localStorage.getItem('adminAccessToken');
+    const adminRefreshToken = localStorage.getItem('adminRefreshToken');
+    if(adminAccessToken && adminAccessToken!==''){
+        config.headers['adminAccessToken'] = adminAccessToken;
+    }
+    if(adminRefreshToken && adminRefreshToken!==''){
+        config.headers['adminRefreshToken'] = adminRefreshToken;
     }
 
     return config;

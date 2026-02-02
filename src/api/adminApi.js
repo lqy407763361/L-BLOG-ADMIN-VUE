@@ -48,7 +48,7 @@ export const adminApi = {
 
     //退出登录
     async adminLoginOut(){
-        return await httpRequest.get('/adminLoginOut');
+        return await httpRequest.post('/adminLoginOut');
     },
 
     //获取RSA公钥

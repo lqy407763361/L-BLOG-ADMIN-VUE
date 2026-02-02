@@ -2,17 +2,17 @@ import { defineStore } from 'pinia'
 
 export const authStore = defineStore('auth', () => {
     const setAuth = (data) => {
-        localStorage.setItem('accessToken', data.accessToken);
-        localStorage.setItem('refreshToken', data.refreshToken);
+        localStorage.setItem('adminAccessToken', data.accessToken);
+        localStorage.setItem('adminRefreshToken', data.refreshToken);
     }
 
     const clearAuth = () => {
-        localStorage.removeItem('accessToken');
-        localStorage.removeItem('refreshToken');
+        localStorage.removeItem('adminAccessToken');
+        localStorage.removeItem('adminRefreshToken');
     }
 
     const isLoggedIn = () => {
-        const token = localStorage.getItem('accessToken');
+        const token = localStorage.getItem('adminAccessToken');
 
         return token && token !== 'null';
     }
