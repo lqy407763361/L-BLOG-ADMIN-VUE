@@ -10,6 +10,7 @@ import CommonFooter from '@/components/common/CommonFooter.vue'
 import router from '@/router'
 import { authStore } from '@/util/authUtil'
 import { siteConfigApi } from '@/api/siteConfigApi'
+import axios from 'axios'
 
 const formTab = ref('seo');
 const metaTitle = ref('');
@@ -83,14 +84,25 @@ const siteConfigIndexApi = async () => {
 }
 
 //上传图片
+const uploadLogoImage = async(options) => {
+      try{
+            const res = await siteConfigApi.uploadLogoImage(options.file);   
+            options.onSuccess(res.data);
+      }catch(error){
+            options.onError(error);
+      }
+}
 const handleAvatarSuccess = (response, uploadFile) => {
       imageUrl.value = URL.createObjectURL(uploadFile.raw);
 }
 const beforeAvatarUpload = (rawFile) => {
-      if(rawFile.type !== 'image/jpeg/png'){
+      const allowType = ["image/jpeg", "image/png"];
+      const allowSize = 2;
+      if(!allowType.includes(rawFile.type)){
             ElMessage.error('文件格式不符！')
             return false;
-      }else if(rawFile.size / 1024 / 1024 > 2){
+      }
+      if(rawFile.size > (allowSize*1024*1024)){
             ElMessage.error('文件大小不符！')
             return false;
       }
@@ -152,7 +164,8 @@ onMounted(async () =>{
                                                 <el-upload
                                                       class="logo-image-upload"
                                                       action=""
-                                                      :show-file-list="false"
+                                                      :http-request="uploadLogoImage"
+                                                      :show-file-list="true"
                                                       :on-success="handleAvatarSuccess"
                                                       :before-upload="beforeAvatarUpload"
                                                 >

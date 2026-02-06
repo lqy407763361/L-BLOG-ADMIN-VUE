@@ -44,6 +44,17 @@ const indexPageApi = async () => {
       lastWeekVisitsList.value = getLastWeekVisitsList.data;
 }
 
+//组件加载完成后再加载接口
+onMounted(async () =>{
+      //判断是否登录
+      if(!authStoreInstance.isLoggedIn()){
+            router.push('/login');
+      }
+
+      //加载接口
+      await indexPageApi();
+});
+
 //图表配置
 const echartsData = ref({});
 watch(lastWeekVisitsList, (newValue) => {
@@ -67,17 +78,6 @@ watch(lastWeekVisitsList, (newValue) => {
       }
 }, {deep: true});
 const { chartBody } = useECharts(echartsData);
-
-//组件加载完成后再加载接口
-onMounted(async () =>{
-      //判断是否登录
-      if(!authStoreInstance.isLoggedIn()){
-            router.push('/login');
-      }
-
-      //加载接口
-      await indexPageApi();
-});
 </script>
 
 <template>

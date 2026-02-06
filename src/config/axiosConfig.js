@@ -24,8 +24,7 @@ httpRequest.interceptors.request.use(function(config){
 httpRequest.interceptors.response.use(
     function(response){
         const data = response.data;
-        if(data && data.code === '500'){
-            window.alert(data.msg);
+        if(data && data.code === 500){
             throw new Error(data.msg);
         }
 
@@ -34,15 +33,22 @@ httpRequest.interceptors.response.use(
 
     async function(error){
         const originalRequest = error.config;
+        if(originalRequest.url === '/adminRefreshAccessToken') {
+            localStorage.removeItem('adminAccessToken');
+            localStorage.removeItem('adminRefreshToken');
+            window.location.href = '/login';
+            
+            return Promise.reject(error);
+        }
 
         //如果身份验证过期，返回401状态码
-        if(error.response?.data?.code === '401' && !originalRequest._retry){
+        if(error.response?.data?.code === 401 && !originalRequest._retry){
             originalRequest._retry = true;
 
             try{
                 //刷新accessToken
                 const res = await httpRequest.post('/adminRefreshAccessToken');
-                const newAccessToken = res.data.data;
+                const newAccessToken = res.data;
                 localStorage.setItem('adminAccessToken', newAccessToken);
 
                 //重试请求

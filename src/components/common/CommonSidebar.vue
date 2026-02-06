@@ -1,7 +1,9 @@
 <script setup>
-import { ref, watch } from 'vue';
+import { ref, onMounted, watch } from 'vue';
 import { useRoute } from 'vue-router';
+import { adminApi } from '@/api/adminApi'
 
+const adminDetail = ref('');
 const route = useRoute();
 const menuStatus = ref({
       article: false,
@@ -16,6 +18,18 @@ const toggleSidebarMenu = (menuType) => {
             menuStatus.value[key] = (key==menuType) ? !menuStatus.value[menuType] : false;
       });
 };
+
+const indexPageApi = async () => {
+      //获取管理员详情
+      const getAdminDetail = await adminApi.getAdminDetail();
+      adminDetail.value = getAdminDetail.data;
+}
+
+//组件加载完成后再加载接口
+onMounted(async () =>{
+      //加载接口
+      await indexPageApi();
+});
 
 //监听路由变化，设置menuStatus下拉菜单状态
 watch(() => route.path, (newPath) => {
@@ -45,8 +59,8 @@ watch(() => route.path, (newPath) => {
       <div class="sidebar">
             <div class="sidebar-title">
                   <ul>
-                        <li><h2>管理员名称</h2></li>
-                        <li><small>管理员群组名称</small></li>
+                        <li><h2>{{ adminDetail.name }}</h2></li>
+                        <li><small>{{ adminDetail.groupName }}</small></li>
                   </ul>
             </div>
             <ul class="sidebar-list">
