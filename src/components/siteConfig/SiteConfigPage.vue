@@ -10,7 +10,6 @@ import CommonFooter from '@/components/common/CommonFooter.vue'
 import router from '@/router'
 import { authStore } from '@/util/authUtil'
 import { siteConfigApi } from '@/api/siteConfigApi'
-import axios from 'axios'
 
 const formTab = ref('seo');
 const metaTitle = ref('');
@@ -19,7 +18,8 @@ const metaKeywords = ref('');
 const siteTitle = ref('');
 const siteListLimit = ref(1);
 const adminListLimit = ref(1);
-const imageUrl = ref('');
+const logoImageUrl = ref('');
+const logoImageFullUrl = ref('');
 const systemMaintenance = ref(1);
 const siteLoginMaxNumber = ref('');
 const adminLoginMaxNumber = ref('');
@@ -74,6 +74,8 @@ const siteConfigIndexApi = async () => {
       siteTitle.value = siteConfigDetail.value.siteTitle || '';
       siteListLimit.value = siteConfigDetail.value.siteListLimit || '';
       adminListLimit.value = siteConfigDetail.value.adminListLimit || '';
+      logoImageUrl.value = siteConfigDetail.value.logoImageUrl || '';
+      logoImageFullUrl.value = siteConfigDetail.value.logoImageFullUrl || '';
       siteConfig.value = siteConfigDetail.value.siteConfig || '';
       systemMaintenance.value = siteConfigDetail.value.systemMaintenance || '';
       siteLoginMaxNumber.value = siteConfigDetail.value.siteLoginMaxNumber || '';
@@ -93,7 +95,7 @@ const uploadLogoImage = async(options) => {
       }
 }
 const handleAvatarSuccess = (response, uploadFile) => {
-      imageUrl.value = URL.createObjectURL(uploadFile.raw);
+      logoImageUrl.value = URL.createObjectURL(uploadFile.raw);
 }
 const beforeAvatarUpload = (rawFile) => {
       const allowType = ["image/jpeg", "image/png"];
@@ -169,8 +171,8 @@ onMounted(async () =>{
                                                       :on-success="handleAvatarSuccess"
                                                       :before-upload="beforeAvatarUpload"
                                                 >
-                                                      <img v-if="imageUrl" :src="imageUrl" class="logo-image" />
-                                                      <font-awesome-icon icon="fa-solid fa-plus" />
+                                                      <img v-if="logoImageUrl" :src="logoImageFullUrl" class="logo-image" />
+                                                      <font-awesome-icon v-else icon="fa-solid fa-plus" />
                                                 </el-upload>
                                           </el-form-item>
                                           <el-form-item label="网站底部配置信息" label-position="right">
