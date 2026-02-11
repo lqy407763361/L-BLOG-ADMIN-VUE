@@ -6,6 +6,7 @@ import CommonFooter from '@/components/common/CommonFooter.vue'
 import router from '@/router'
 import { authStore } from '@/util/authUtil'
 import { adminApi } from '@/api/adminApi'
+import { captchaApi } from '@/api/captchaApi'
 import { siteConfigApi } from '@/api/siteConfigApi'
 
 const account = ref('');
@@ -18,7 +19,7 @@ const authStoreInstance = authStore();
 
 //获取验证码
 const refreshCaptcha = async () =>{
-      const generateCaptcha = await adminApi.generateCaptcha();
+      const generateCaptcha = await captchaApi.generateCaptcha();
       captchaImage.value = 'data:image/png;base64,' + generateCaptcha.data;
       captchaCode.value = '';
 }

@@ -36,11 +36,6 @@ export const adminApi = {
         return await httpRequest.get('/getAdminTotal');
     },
 
-    //获取验证码
-    async generateCaptcha(){
-        return await httpRequest.get('/generateCaptcha');
-    },
-
     //登录
     async adminLogin(params = {}){
         return await httpRequest.post('/adminLogin', params);
