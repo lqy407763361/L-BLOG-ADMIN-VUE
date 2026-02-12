@@ -5,7 +5,7 @@ import { formatCurrentYear } from '@/util/dateUtil'
 
 //获取API接口
 const siteConfigDetail = ref({});
-const commonFooterApi = async() => {
+const commonFooterApi = async () => {
       //获取网站配置
       const getSiteConfigDetail = await siteConfigApi.getSiteConfigDetail();
       siteConfigDetail.value = getSiteConfigDetail.data;

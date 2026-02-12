@@ -17,7 +17,7 @@ const newUserTotal = ref(0);
 const siteConfigDetail = ref({});
 const authStoreInstance = authStore();
 
-const commonHeaderApi = async() => {
+const commonHeaderApi = async () => {
       //获取消息数量
       const getMessageTotal = await messageApi.getMessageTotal();
       messageTotal.value = getMessageTotal.data;

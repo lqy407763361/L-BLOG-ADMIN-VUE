@@ -77,8 +77,8 @@ const articleCategoryIndexApi = async (params={}) => {
 //组件加载完成后再加载接口
 onMounted(async () =>{
       //判断是否登录
-      if(authStoreInstance.isLoggedIn()){
-            router.push('/');
+      if(!authStoreInstance.isLoggedIn()){
+            router.push('/login');
       }
 
       //加载接口

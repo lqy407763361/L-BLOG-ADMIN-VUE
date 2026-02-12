@@ -86,7 +86,7 @@ const siteConfigIndexApi = async () => {
 }
 
 //上传图片
-const uploadLogoImage = async(options) => {
+const uploadLogoImage = async (options) => {
       try{
             const res = await siteConfigApi.uploadLogoImage(options.file);   
             options.onSuccess(res.data);
